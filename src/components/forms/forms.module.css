@@ -1,0 +1,125 @@
+.booking {
+  border: 1px solid var(--divider);
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border-radius: 0.5rem;
+}
+.heading {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+}
+.formDescription {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin: 0 0 2rem;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+.form > [data-slot="text-field"] {
+  width: 100%;
+}
+.form :global([data-slot="label"]),
+.selectField label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.065em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.form :global([data-slot="input"]),
+.form :global([data-slot="textarea"]),
+.selectField select {
+  width: 100%;
+  border: 1px solid var(--field-border);
+  border-radius: 0.25rem;
+  background: var(--field-background);
+  color: var(--foreground);
+  font-size: 1rem;
+  padding: 0.875rem 1rem;
+  box-shadow: none;
+  min-height: 3rem;
+}
+.form :global([data-slot="textarea"]) {
+  resize: vertical;
+  line-height: 1.6;
+  min-height: 7rem;
+}
+.form :global([data-slot="input"]::placeholder),
+.form :global([data-slot="textarea"]::placeholder) {
+  color: var(--text-muted);
+  opacity: 1;
+}
+.form
+  :global([data-slot="text-field"][data-invalid="true"] [data-slot="input"]),
+.form
+  :global(
+    [data-slot="text-field"][data-invalid="true"] [data-slot="textarea"]
+  ) {
+  border-color: var(--danger);
+}
+.form :global([data-slot="field-error"]) {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--danger);
+}
+.optional {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 450;
+}
+.selectField {
+  width: 100%;
+}
+.selectField select {
+  padding-right: 2rem;
+  cursor: pointer;
+}
+.previewNotice {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+.submit {
+  width: 100%;
+  border-radius: 100px;
+  min-height: 3rem;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 0.875rem;
+  font-weight: 750;
+  padding-inline: 1.5rem;
+}
+.submit:hover {
+  background: var(--accent-hover);
+  color: var(--background);
+}
+.form :global(.form-error-summary:empty) {
+  display: none;
+}
+.form :global(.form-error-summary) {
+  color: var(--danger);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.form :global(.form-feedback) {
+  border: 1px solid var(--divider);
+  background: var(--surface-selected);
+  padding: 1.25rem;
+  border-radius: 0.25rem;
+}
+.form :global(.form-feedback strong) {
+  font-size: 1rem;
+}
+.form :global(.form-feedback p) {
+  color: var(--text-muted);
+  line-height: 1.65;
+  font-size: 0.875rem;
+  margin: 0.5rem 0 0;
+}

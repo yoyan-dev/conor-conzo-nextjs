@@ -1,0 +1,163 @@
+.hero {
+  position: relative;
+  overflow: clip;
+}
+.inner {
+  display: grid;
+  gap: 2rem;
+  padding-top: 2.5rem;
+}
+.content {
+  text-align: right;
+  min-width: 0;
+  grid-row: 1;
+}
+.name {
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  font-weight: 850;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  margin: 0 0 1rem;
+  text-align: right;
+}
+.nameDot {
+  color: var(--brand-blue);
+}
+.introduction {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+  /* max-width: 42ch; */
+  margin: 0 auto 1.75rem;
+  text-align: right;
+}
+.headline {
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  line-height: 1.04;
+  font-weight: 850;
+  letter-spacing: -0.045em;
+  margin: 0 0 1.5rem;
+}
+.headline span {
+  display: block;
+  text-align: right;
+}
+.accent {
+  color: var(--brand-blue);
+}
+.credentials {
+  padding: 0;
+  margin: 0 0 1.75rem;
+  display: flex;
+  justify-content: right;
+  list-style: none;
+}
+.credentials li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-inline: 1.5rem;
+}
+.credentials li + li {
+  border-inline-start: 1px solid var(--divider);
+}
+.credentials strong {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.credentials span {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.note {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  margin: 1rem 0 0;
+}
+.portrait {
+  position: relative;
+  width: min(75vw, 23rem);
+  justify-self: center;
+  align-self: end;
+  isolation: isolate;
+}
+.glow {
+  position: absolute;
+  inset: 1% -20% 0;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at 48% 43%,
+    var(--brand-blue) 2%,
+    oklch(54.519% 0.24161 261.404 / 0.378) 42%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (min-width: 48rem) {
+  .inner {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: center;
+    gap: 2rem;
+    padding-top: 2.5rem;
+    min-height: 39rem;
+  }
+  .content {
+    grid-row: auto;
+    padding-block: 1.5rem 2rem;
+  }
+  .portrait {
+    width: min(100%, 28.75rem);
+  }
+  .headline {
+    font-size: clamp(2rem, 3.8vw, 3.4rem);
+  }
+}
+@media (min-width: 64rem) {
+  .inner {
+    min-height: 39rem;
+    gap: 4rem;
+    padding-top: 1.5rem;
+  }
+}
+@media (min-width: 48rem) and (max-height: 48rem) {
+  .inner {
+    min-height: 34rem;
+    padding-top: 1rem;
+  }
+  .portrait {
+    width: min(100%, 25rem);
+  }
+  .name {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+  }
+  .introduction {
+    margin-bottom: 1.25rem;
+  }
+  .headline {
+    font-size: 2.8rem;
+    margin-bottom: 1.25rem;
+  }
+  .credentials {
+    margin-bottom: 1.25rem;
+  }
+}
+@media (max-width: 25rem) {
+  .actions {
+    flex-direction: column;
+  }
+  .actions a {
+    width: 100%;
+  }
+}

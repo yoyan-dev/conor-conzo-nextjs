@@ -1,0 +1,73 @@
+.layout {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+}
+.description {
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 34ch;
+  margin: 1.5rem 0;
+}
+.accordion {
+  width: 100%;
+}
+.item {
+  border-top: 1px solid var(--divider);
+}
+.item::after {
+  display: none;
+}
+.item:last-child {
+  border-bottom: 1px solid var(--divider);
+}
+.trigger {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  padding: 1.5rem 0;
+  gap: 1.5rem;
+  min-height: 4.5rem;
+}
+.trigger:hover {
+  background-color: transparent !important;
+  color: var(--brand-blue);
+}
+.indicator {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--divider);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.indicator::before,
+.indicator::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+  top: calc(50% - 0.5px);
+  left: 30%;
+  width: 40%;
+  height: 1px;
+}
+.indicator::after {
+  transform: rotate(90deg);
+  transition: transform 180ms ease-out;
+}
+.trigger[aria-expanded="true"] .indicator::after {
+  transform: rotate(0);
+}
+.answer {
+  padding: 0 2rem 1.75rem 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 65ch;
+}
+@media (min-width: 48rem) {
+  .layout {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(2rem, 6vw, 7rem);
+  }
+}
