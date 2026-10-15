@@ -32,6 +32,7 @@ export function OrientationsSection() {
             if (isSessionType(value)) onSessionChange(value);
           }}
           className={styles.options}
+          data-scroll-reveal-group=""
         >
           {orientations.map((orientation) => (
             <OrientationOption key={orientation.id} orientation={orientation} />

@@ -15,7 +15,7 @@ export function ContactSection() {
         <SectionHeading eyebrow="Find me" id="contact-heading">
           Social & contact.
         </SectionHeading>
-        <div className={styles.layout}>
+        <div className={styles.layout} data-scroll-reveal-group="">
           <div>
             <p className="eyebrow">Around the internet</p>
             <div className={styles.socials}>

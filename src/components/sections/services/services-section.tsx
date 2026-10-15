@@ -23,7 +23,7 @@ export function ServicesSection() {
             they can actually maintain.
           </p>
         </div>
-        <div className={styles.services}>
+        <div className={styles.services} data-scroll-reveal-group="">
           {services.map((service) => (
             <article key={service.id} className={styles.service}>
               <div className={styles.label}>

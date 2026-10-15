@@ -10,11 +10,13 @@ import { TestimonialsSection } from "@/components/sections/testimonials/testimon
 import { FaqSection } from "@/components/sections/faq/faq-section";
 import { ContactSection } from "@/components/sections/contact/contact-section";
 import { SectionNavigation } from "@/components/layout/section-navigation";
+import { ScrollReveals } from "@/components/ui/scroll-reveals";
 export default function Home() {
   return (
     <CoachingFlow>
       <SiteHeader />
       <main id="main" tabIndex={-1}>
+        <ScrollReveals />
         <HeroSection />
         <SectionNavigation />
         <ServicesSection />

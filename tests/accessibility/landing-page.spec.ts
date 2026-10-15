@@ -8,6 +8,8 @@ for (const width of [390, 1440]) {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.setViewportSize({ width, height: 900 });
+    // Audit settled colors; scroll-reveals.spec.ts exercises motion separately.
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
     await page.evaluate(() => document.fonts.ready);
     const initial = await new AxeBuilder({ page })

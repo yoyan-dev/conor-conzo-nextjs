@@ -19,7 +19,7 @@ export function TestimonialBoard({ reviews }: TestimonialBoardProps) {
     .filter(({ rating, count }) => rating >= 3 || count > 0);
 
   return (
-    <div className={styles.board}>
+    <div className={styles.board} data-scroll-reveal-group="">
       <div className={styles.introduction}>
         <p className={styles.eyebrow}>Testimonials</p>
         <h2 id="reviews-heading" className={styles.heading}>
