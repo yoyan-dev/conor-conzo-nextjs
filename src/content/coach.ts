@@ -113,5 +113,33 @@ export const faqs = [
   },
 ] as const;
 
-// Publish only supplied, permissioned reviews. The document contains no review text.
-export const testimonials: Testimonial[] = [];
+// Transcribed from the four client message images in the user-provided source document.
+// Use only clearly visible first names; one screenshot truncates the name.
+// The screenshots do not provide stable calendar dates.
+export const testimonials: Testimonial[] = [
+  {
+    name: "Vincent",
+    rating: 5,
+    quote:
+      "Professional friendly and down to earth connor was great at helping me start my fitness journey. He was reassuring and answered questions i had about equiptment use and provided me with a custom workout that helped me ease into working out helping me build confidence and and routines gradually 5/5 stars",
+  },
+  {
+    name: "Dana",
+    rating: 5,
+    quote:
+      "Coach Conzo is that friend that would promise you soft serve and pizza, ONLY if you finish your workouts and do what’s best for you! In all seriousness, I’ve never been more motivated to workout and to learn more about what works out for my body, and I have seen results in the past month with him that I haven’t seen in my last five years at the gym. He’s always ready to answer any question and doesn’t hesitate to demonstrate any form to ensure you get maximum benefit of the training. He’s a pretty good fella too. 10/10 would recommend to y’all",
+  },
+  {
+    name: "Client 03",
+    rating: 5,
+    type: "Online + in-person",
+    quote:
+      "Couldn’t recommend Conzo enough! I do online coaching with him and one in-person session a month and it works really well for me.\n\nHe actually listens to my goals and what I like and don’t like in the gym, and adapts my programme around that rather than just giving me a generic plan. He’s also added food goals which have really helped keep me focused and accountable.\n\nReally supportive, easy to work with and I’m really enjoying my training with him!",
+  },
+  {
+    name: "Alex",
+    rating: 5,
+    quote:
+      "5 stars, extremely knowledgeable, totally able to work with my hypermobility, supportive like the ultimate hype man and set me up for long term gains",
+  },
+];

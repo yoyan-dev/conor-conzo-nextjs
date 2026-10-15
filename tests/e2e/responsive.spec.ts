@@ -25,7 +25,14 @@ for (const width of [320, 390, 768, 1024, 1366, 1440]) {
       .getByRole("region", { name: "Meet Coach Conzo" })
       .getByRole("link", { name: "Book a free call", exact: true });
     await expect(cta).toBeInViewport();
-    for (const id of ["about", "orientations", "book", "faq", "contact"]) {
+    for (const id of [
+      "about",
+      "orientations",
+      "book",
+      "reviews",
+      "faq",
+      "contact",
+    ]) {
       await page.locator(`#${id}`).scrollIntoViewIfNeeded();
       expect(
         await page.evaluate(
@@ -34,24 +41,31 @@ for (const width of [320, 390, 768, 1024, 1366, 1440]) {
       ).toBe(false);
     }
     if (width === 390 || width === 1440) {
-      mkdirSync("docs/qa", { recursive: true });
+      mkdirSync("test-results/qa", { recursive: true });
       await page.goto("/");
       await page.evaluate(() => document.fonts.ready);
       await page.screenshot({
         path: path.join(
-          "docs/qa",
+          "test-results/qa",
           width === 390 ? "ui-mobile.png" : "ui-desktop.png",
         ),
       });
       if (width === 1440) {
         await page.screenshot({
-          path: "docs/qa/ui-full-page.png",
+          path: "test-results/qa/ui-full-page.png",
           fullPage: true,
         });
-        for (const id of ["about", "orientations", "book", "faq", "contact"])
+        for (const id of [
+          "about",
+          "orientations",
+          "book",
+          "reviews",
+          "faq",
+          "contact",
+        ])
           await page
             .locator(`#${id}`)
-            .screenshot({ path: `docs/qa/ui-${id}.png` });
+            .screenshot({ path: `test-results/qa/ui-${id}.png` });
       }
     }
   });

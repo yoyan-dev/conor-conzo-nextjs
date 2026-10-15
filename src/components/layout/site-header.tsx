@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { navigationItems } from "@/content/navigation";
 import { MobileNavigation } from "@/components/layout/mobile-navigation";
-import { ActionLink } from "@/components/ui/action-link";
+import { FreeCallAction } from "@/components/coaching/free-call-action";
 export function SiteHeader() {
   return (
     <header className="site-header">
@@ -18,9 +18,9 @@ export function SiteHeader() {
               </a>
             ))}
         </nav>
-        <ActionLink href="#book" className="header-action">
+        <FreeCallAction className="header-action">
           Book a free call <span aria-hidden="true">↗</span>
-        </ActionLink>
+        </FreeCallAction>
         <MobileNavigation />
       </div>
     </header>

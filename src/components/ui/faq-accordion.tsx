@@ -1,7 +1,7 @@
 "use client";
 import { Accordion } from "@heroui/react/accordion";
 import type { FaqItem } from "@/types/coaching";
-import styles from "@/components/sections/faq-section.module.css";
+import styles from "@/app/assets/css/sections/faq-section.module.css";
 export function FaqAccordion({ items }: { items: readonly FaqItem[] }) {
   return (
     <Accordion allowsMultipleExpanded className={styles.accordion}>

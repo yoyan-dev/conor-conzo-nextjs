@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { site } from "@/lib/site";
-import "./globals.css";
+import "./assets/css/globals.css";
 
 const raleway = localFont({
   src: "../../public/fonts/raleway-latin-variable.woff2",

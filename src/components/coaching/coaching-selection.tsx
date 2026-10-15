@@ -3,6 +3,7 @@ import { createContext, use } from "react";
 import type { SessionType } from "@/types/coaching";
 type CoachingSelection = {
   sessionType: SessionType;
+  revision: number;
   onSessionChange: (value: SessionType) => void;
 };
 export const CoachingSelectionContext = createContext<CoachingSelection | null>(

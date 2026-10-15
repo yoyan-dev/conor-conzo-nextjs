@@ -2,7 +2,9 @@
 import { Button } from "@heroui/react/button";
 import { navigationItems } from "@/content/navigation";
 import { useMobileNavigation } from "@/hooks/use-mobile-navigation";
+import { useCoachingSelection } from "@/components/coaching/coaching-selection";
 export function MobileNavigation() {
+  const { onSessionChange } = useCoachingSelection();
   const { isOpen, buttonRef, navigationRef, handleNavigate, handleToggle } =
     useMobileNavigation();
   return (
@@ -33,7 +35,10 @@ export function MobileNavigation() {
           <a
             key={item.id}
             href={`#${item.id}`}
-            onClick={() => handleNavigate(item.id)}
+            onClick={() => {
+              if (item.id === "book") onSessionChange("discovery-call");
+              handleNavigate(item.id);
+            }}
           >
             {item.label}
             <span aria-hidden="true">↗</span>

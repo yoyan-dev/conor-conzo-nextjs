@@ -10,14 +10,20 @@ export function ServiceAction({
   title: string;
 }) {
   const { onSessionChange } = useCoachingSelection();
+  const isCollaboration = serviceId === "collaborations";
   return (
     <ActionLink
-      href="#book"
+      href={isCollaboration ? "#contact" : "#book"}
       variant="text"
       className="service-action"
-      onPress={() => onSessionChange(serviceId)}
+      onPress={() => {
+        if (!isCollaboration) onSessionChange(serviceId);
+      }}
     >
-      Ask about {title.toLowerCase()} <span aria-hidden="true">↗</span>
+      {isCollaboration
+        ? "Discuss a collaboration"
+        : `Ask about ${title.toLowerCase()}`}{" "}
+      <span aria-hidden="true">↗</span>
     </ActionLink>
   );
 }

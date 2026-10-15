@@ -1,7 +1,8 @@
 import { coach } from "@/content/coach";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { SocialIcon } from "@/components/ui/social-icon";
 import { ContactForm } from "@/components/forms/contact-form";
-import styles from "./contact-section.module.css";
+import styles from "@/app/assets/css/sections/contact-section.module.css";
 export function ContactSection() {
   return (
     <section
@@ -18,14 +19,14 @@ export function ContactSection() {
           <div>
             <p className="eyebrow">Around the internet</p>
             <div className={styles.socials}>
-              {coach.socials.map((social, index) => (
+              {coach.socials.map((social) => (
                 <a
                   href={social.href}
                   key={social.name}
                   className={styles.social}
                 >
-                  <span className={styles.monogram} aria-hidden="true">
-                    {["IG", "TT", "YT"][index]}
+                  <span className={styles.icon} aria-hidden="true">
+                    <SocialIcon platform={social.name} />
                   </span>
                   <span>
                     <strong>{social.name}</strong>

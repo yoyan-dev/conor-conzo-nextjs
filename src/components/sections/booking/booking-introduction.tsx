@@ -1,5 +1,5 @@
 import { SectionHeading } from "@/components/ui/section-heading";
-import styles from "./booking-section.module.css";
+import styles from "@/app/assets/css/sections/booking-section.module.css";
 export function BookingIntroduction() {
   return (
     <div className={styles.introduction}>

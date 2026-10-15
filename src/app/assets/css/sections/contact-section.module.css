@@ -15,15 +15,14 @@
   text-decoration: none;
   min-height: 5.5rem;
 }
-.monogram {
+.icon {
   display: grid;
   place-items: center;
   border: 1px solid var(--divider);
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 0.5rem;
-  font-weight: 750;
-  font-size: 0.8125rem;
+  flex-shrink: 0;
 }
 .social strong {
   display: block;

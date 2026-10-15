@@ -23,4 +23,6 @@ export type Testimonial = {
   name: string;
   quote: string;
   rating: 1 | 2 | 3 | 4 | 5;
+  type?: string;
+  date?: string;
 };

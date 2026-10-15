@@ -8,28 +8,26 @@ import { TextArea } from "@heroui/react/textarea";
 import { Label } from "@heroui/react/label";
 import { FieldError } from "@heroui/react/field-error";
 import { useCoachingSelection } from "@/components/coaching/coaching-selection";
-import { FormFeedback } from "@/components/forms/form-feedback";
 import { sessionOptions, isSessionType } from "@/content/sessions";
 import { validateBookingDraft } from "@/lib/form-validation";
 import type { BookingDraft, FormErrors } from "@/types/forms";
-import type { SessionType } from "@/types/coaching";
 import styles from "./forms.module.css";
 export function BookingForm() {
-  const { sessionType, onSessionChange } = useCoachingSelection();
+  const { sessionType, revision, onSessionChange } = useCoachingSelection();
   const [draft, setDraft] = useState<BookingDraft>({
     name: "",
     email: "",
     message: "",
   });
   const [errors, setErrors] = useState<FormErrors<BookingDraft>>({});
-  const [previewedSession, setPreviewedSession] = useState<SessionType | null>(
+  const [previewedRevision, setPreviewedRevision] = useState<number | null>(
     null,
   );
-  const isReady = previewedSession === sessionType;
+  const isReady = previewedRevision === revision;
   function handleChange(field: keyof BookingDraft, value: string) {
     const next = { ...draft, [field]: value };
     setDraft(next);
-    setPreviewedSession(null);
+    setPreviewedRevision(null);
     if (errors[field])
       setErrors((current) => ({
         ...current,
@@ -46,7 +44,7 @@ export function BookingForm() {
     event.preventDefault();
     const nextErrors = validateBookingDraft(draft);
     setErrors(nextErrors);
-    setPreviewedSession(null);
+    setPreviewedRevision(null);
     const first = Object.keys(nextErrors)[0];
     if (first) {
       event.currentTarget
@@ -54,17 +52,17 @@ export function BookingForm() {
         ?.focus();
       return;
     }
-    setPreviewedSession(sessionType);
+    setPreviewedRevision(revision);
   }
   return (
     <div className={styles.booking}>
-      <h3 className={styles.heading}>Let’s make a start.</h3>
-      <p className={styles.formDescription}>Tell me a little about you.</p>
+      <h3 className={styles.heading}>Schedule your session</h3>
       <Form
         validationBehavior="aria"
         onSubmit={handlePreviewSubmit}
         className={styles.form}
         aria-label="Booking preview"
+        aria-describedby="booking-preview-notice"
       >
         <TextField
           name="name"
@@ -110,7 +108,7 @@ export function BookingForm() {
             onChange={(event) => {
               if (isSessionType(event.target.value)) {
                 onSessionChange(event.target.value);
-                setPreviewedSession(null);
+                setPreviewedRevision(null);
               }
             }}
           >
@@ -139,16 +137,9 @@ export function BookingForm() {
           />
           <FieldError>{errors.message}</FieldError>
         </TextField>
-        <p className={styles.previewNotice}>
-          UI preview only. No booking or message will be sent.
-        </p>
         <Button type="submit" variant="primary" className={styles.submit}>
-          Request Booking
+          Preview request
         </Button>
-        <FormFeedback
-          isReady={isReady}
-          hasErrors={Object.values(errors).some(Boolean)}
-        />
       </Form>
     </div>
   );

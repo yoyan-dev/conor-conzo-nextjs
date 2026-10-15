@@ -1,16 +1,20 @@
 import { test, expect } from "@playwright/test";
 
-test("desktop navigation targets real sections and empty reviews stay unpublished", async ({
+test("desktop navigation targets real sections and sourced reviews", async ({
   page,
 }) => {
   await page.goto("/");
   await expect(page.locator("h1")).toHaveCount(1);
-  for (const id of ["about", "orientations", "book", "faq", "contact"])
+  for (const id of [
+    "about",
+    "orientations",
+    "book",
+    "reviews",
+    "faq",
+    "contact",
+  ])
     await expect(page.locator(`#${id}`)).toHaveCount(1);
-  await expect(page.locator("#reviews")).toHaveCount(0);
-  await expect(
-    page.getByRole("link", { name: "Testimonials", exact: true }),
-  ).toHaveCount(0);
+  await expect(page.locator("#reviews tbody tr")).toHaveCount(4);
   await page
     .getByRole("navigation", { name: "Main navigation", exact: true })
     .getByRole("link", { name: "FAQ", exact: true })

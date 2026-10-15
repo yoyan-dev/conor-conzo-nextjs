@@ -1,24 +1,21 @@
 "use client";
 import { useState, type ReactNode } from "react";
 import { CoachingSelectionContext } from "@/components/coaching/coaching-selection";
-import { OrientationsSection } from "@/components/sections/orientations-section";
-import { BookingSection } from "@/components/sections/booking-section";
 import type { SessionType } from "@/types/coaching";
-export function CoachingFlow({
-  children,
-  bookingIntroduction,
-}: {
-  children: ReactNode;
-  bookingIntroduction: ReactNode;
-}) {
-  const [sessionType, setSessionType] = useState<SessionType>("discovery-call");
+export function CoachingFlow({ children }: { children: ReactNode }) {
+  const [selection, setSelection] = useState({
+    sessionType: "discovery-call" as SessionType,
+    revision: 0,
+  });
+  function onSessionChange(sessionType: SessionType) {
+    setSelection((current) => ({
+      sessionType,
+      revision: current.revision + 1,
+    }));
+  }
   return (
-    <CoachingSelectionContext
-      value={{ sessionType, onSessionChange: setSessionType }}
-    >
+    <CoachingSelectionContext value={{ ...selection, onSessionChange }}>
       {children}
-      <OrientationsSection />
-      <BookingSection introduction={bookingIntroduction} />
     </CoachingSelectionContext>
   );
 }

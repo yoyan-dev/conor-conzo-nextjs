@@ -8,7 +8,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: [
     ["list"],
-    ["json", { outputFile: "docs/qa/playwright-results.json" }],
+    ["json", { outputFile: "test-results/playwright-results.json" }],
   ],
   use: {
     baseURL: "http://127.0.0.1:3001",

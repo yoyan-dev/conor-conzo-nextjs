@@ -6,7 +6,7 @@ import { OrientationOption } from "@/components/coaching/orientation-option";
 import { ActionLink } from "@/components/ui/action-link";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { isSessionType } from "@/content/sessions";
-import styles from "./orientations-section.module.css";
+import styles from "@/app/assets/css/sections/orientations-section.module.css";
 export function OrientationsSection() {
   const { sessionType, onSessionChange } = useCoachingSelection();
   const selected = orientations.find((item) => item.id === sessionType);

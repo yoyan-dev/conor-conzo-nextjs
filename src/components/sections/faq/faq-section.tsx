@@ -2,7 +2,7 @@ import { faqs } from "@/content/coach";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { FaqAccordion } from "@/components/ui/faq-accordion";
 import { ActionLink } from "@/components/ui/action-link";
-import styles from "./faq-section.module.css";
+import styles from "@/app/assets/css/sections/faq-section.module.css";
 export function FaqSection() {
   return (
     <section

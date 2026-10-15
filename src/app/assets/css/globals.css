@@ -11,17 +11,18 @@
   --surface: #0a0b0d;
   --surface-selected: oklch(0.19 0.005 260);
   --surface-foreground: var(--foreground);
-  --text-muted: oklch(0.74 0.005 260);
+  --text-muted: oklch(0.78 0.005 260);
   --muted: var(--text-muted);
   --accent: var(--foreground);
   --accent-foreground: var(--background);
-  --accent-hover: #0166ff;
+  --accent-hover: var(--brand-blue-text);
   --accent-soft: oklch(0.24 0.025 260);
   --accent-soft-foreground: var(--foreground);
   --divider: oklch(0.3 0.005 260);
   --separator: var(--divider);
   --focus: #0166ff;
   --brand-blue: #0166ff;
+  --brand-blue-text: #4d91ff;
   --field-background: oklch(0.22 0.005 260);
   --field: var(--field-background);
   --field-foreground: var(--foreground);
@@ -29,7 +30,7 @@
   --field-border: var(--divider);
   --danger: oklch(0.79 0.12 20);
   --content-width: 76rem;
-  --section-space: clamp(4rem, 7vw, 7rem);
+  --section-space: clamp(3.5rem, 6vw, 6rem);
   --z-header: 30;
 }
 * {
@@ -54,7 +55,7 @@ a {
   text-underline-offset: 0.3em;
 }
 a:hover {
-  color: var(--brand-blue);
+  color: var(--brand-blue-text);
 }
 button,
 input,
@@ -81,7 +82,7 @@ main[tabindex="-1"]:focus {
 }
 ::selection {
   background: var(--brand-blue);
-  color: var(--background);
+  color: #fff;
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -176,7 +177,7 @@ main[tabindex="-1"]:focus {
   font-size: 0.8125rem;
 }
 .action-link--text:hover {
-  color: var(--brand-blue);
+  color: var(--brand-blue-text);
 }
 .action-link span[aria-hidden="true"] {
   font-size: 1.125rem;
@@ -203,7 +204,7 @@ main[tabindex="-1"]:focus {
   white-space: nowrap;
 }
 .wordmark span {
-  color: var(--brand-blue);
+  color: var(--brand-blue-text);
 }
 .desktop-navigation {
   display: none;

@@ -1,7 +1,7 @@
 import { services } from "@/content/coach";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ServiceAction } from "@/components/coaching/service-action";
-import styles from "./services-section.module.css";
+import styles from "@/app/assets/css/sections/services-section.module.css";
 export function ServicesSection() {
   return (
     <section
@@ -18,9 +18,9 @@ export function ServicesSection() {
             <span className="muted-heading">we’re all human.</span>
           </SectionHeading>
           <p>
-            I’m Coach Conzo. Sixteen years of fitness, and still just as
-            passionate about helping people achieve results they can actually
-            maintain.
+            I’m Coach Conzo - Sixteen (16) years in, countless clients helped,
+            and still just as passionate about helping people achieve results
+            they can actually maintain.
           </p>
         </div>
         <div className={styles.services}>
@@ -31,7 +31,7 @@ export function ServicesSection() {
               </div>
               <h3>{service.title}</h3>
               <p>{service.description}</p>
-              {/* <ServiceAction serviceId={service.id} title={service.title} /> */}
+              <ServiceAction serviceId={service.id} title={service.title} />
             </article>
           ))}
         </div>

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { BookingForm } from "@/components/forms/booking-form";
-import styles from "./booking-section.module.css";
+import styles from "@/app/assets/css/sections/booking-section.module.css";
 export function BookingSection({ introduction }: { introduction: ReactNode }) {
   return (
     <section

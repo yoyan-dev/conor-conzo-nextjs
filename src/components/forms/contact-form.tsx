@@ -7,7 +7,6 @@ import { Input } from "@heroui/react/input";
 import { TextArea } from "@heroui/react/textarea";
 import { Label } from "@heroui/react/label";
 import { FieldError } from "@heroui/react/field-error";
-import { FormFeedback } from "@/components/forms/form-feedback";
 import { validateContactDraft } from "@/lib/form-validation";
 import type { ContactDraft, FormErrors } from "@/types/forms";
 import styles from "./forms.module.css";
@@ -51,6 +50,7 @@ export function ContactForm() {
       onSubmit={handlePreviewSubmit}
       className={styles.form}
       aria-label="Contact preview"
+      aria-describedby="contact-preview-notice"
     >
       <TextField
         name="email"
@@ -87,16 +87,9 @@ export function ContactForm() {
         />
         <FieldError>{errors.message}</FieldError>
       </TextField>
-      <p className={styles.previewNotice}>
-        UI preview only. No message will be sent.
-      </p>
       <Button type="submit" className={styles.submit} variant="primary">
-        Preview message
+        Send message
       </Button>
-      <FormFeedback
-        isReady={isReady}
-        hasErrors={Object.values(errors).some(Boolean)}
-      />
     </Form>
   );
 }

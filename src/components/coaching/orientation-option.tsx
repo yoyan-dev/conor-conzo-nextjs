@@ -1,7 +1,7 @@
 "use client";
 import { Radio } from "@heroui/react/radio";
 import type { Orientation } from "@/types/coaching";
-import styles from "@/components/sections/orientations-section.module.css";
+import styles from "@/app/assets/css/sections/orientations-section.module.css";
 export function OrientationOption({
   orientation,
 }: {
@@ -14,7 +14,7 @@ export function OrientationOption({
       aria-label={`${orientation.level}: ${orientation.title}`}
     >
       <Radio.Content className={styles.optionContent}>
-        {() => (
+        {({ isSelected }) => (
           <>
             <span className={styles.optionTop}>
               <span className="eyebrow">{orientation.level}</span>
@@ -30,6 +30,10 @@ export function OrientationOption({
             </span>
             <span className={styles.description}>
               {orientation.description}
+            </span>
+            <span className={styles.selection} aria-hidden="true">
+              {isSelected ? "Selected" : "Select session"}
+              <span>{isSelected ? "✓" : "↗"}</span>
             </span>
           </>
         )}
