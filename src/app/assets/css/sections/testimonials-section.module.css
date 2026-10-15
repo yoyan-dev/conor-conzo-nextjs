@@ -110,9 +110,9 @@
 .tableFrame {
   margin-top: clamp(2.5rem, 4.8vw, 3.125rem);
   overflow: hidden;
-  border: 1px solid #26282b;
-  border-radius: 0.625rem;
-  background: #050505;
+  border: 1px solid #1c1c1c;
+  border-radius: 0.375rem;
+  background: #000;
 }
 
 .table {
@@ -120,18 +120,20 @@
   border-collapse: collapse;
   table-layout: fixed;
   text-align: left;
+  font-family: Arial, sans-serif;
 }
 
 .table th,
 .table td {
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 .table thead th {
-  height: 2.875rem;
-  padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid #26282b;
-  color: var(--text-muted);
+  height: 2.75rem;
+  padding: 0.875rem 1.125rem;
+  border-bottom: 1px solid #1c1c1c;
+  background: #0a0a0a;
+  color: #7d7d7d;
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.09em;
@@ -140,13 +142,28 @@
 
 .table tbody th,
 .table tbody td {
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #1c1d1f;
+  padding: 1.25rem 1.125rem;
+  border-bottom: 1px solid #121212;
   overflow-wrap: anywhere;
 }
 
 .comment {
   white-space: pre-line;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #050505;
+}
+
+.table :global(.rating-stars) {
+  color: #fff;
+  font-size: 0.875rem;
+  letter-spacing: 0.125em;
+  white-space: nowrap;
+}
+
+.table :global(.rating-star-empty) {
+  color: #282828;
 }
 
 .table tbody tr:last-child th,
@@ -156,26 +173,30 @@
 
 .table tbody th {
   color: #fff;
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 1.125rem;
+  font-weight: 700;
 }
 
 .table tbody td {
-  color: var(--text-muted);
+  color: #7a7a7a;
   font-size: 0.9375rem;
   line-height: 1.65;
 }
 
 .table th:nth-child(1) {
-  width: 19%;
+  width: 13.6%;
 }
 
 .table th:nth-child(2) {
-  width: 16%;
+  width: 18%;
 }
 
 .table th:nth-child(3) {
-  width: 65%;
+  width: 14.3%;
+}
+
+.table th:nth-child(4) {
+  width: 54.1%;
 }
 
 .reviewType {

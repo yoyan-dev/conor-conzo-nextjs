@@ -24,14 +24,18 @@ export function BookingIntroduction() {
         <li>
           <span aria-hidden="true">✓</span> Leave with a clear next step
         </li>
+        <li>
+          <span aria-hidden="true">✓</span> Get an email confirmation with your
+          call details
+        </li>
       </ul>
       <div className={styles.coachNote}>
-        <span className="eyebrow">A little reassurance</span>
+        <span>Real talk from Conzo</span>
         <p>
-          You don’t need to have it all figured out. We start where you are,
-          work at your pace, and build from there.
+          &quot;I&apos;ve been doing this for nearly 10 years. I&apos;ve seen every level of
+          fitness, every lifestyle, every excuse — and I mean that with full
+          love. The call is just a chat. Come as you are.&quot;
         </p>
-        <span className={styles.signature}>Coach Conzo</span>
       </div>
     </div>
   );

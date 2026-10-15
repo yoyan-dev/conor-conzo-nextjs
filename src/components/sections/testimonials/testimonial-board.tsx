@@ -113,6 +113,7 @@ export function TestimonialBoard({ reviews }: TestimonialBoardProps) {
           <thead>
             <tr>
               <th scope="col">Client</th>
+              <th scope="col">Type</th>
               <th scope="col">Rating</th>
               <th scope="col">Comment</th>
             </tr>
@@ -121,12 +122,8 @@ export function TestimonialBoard({ reviews }: TestimonialBoardProps) {
             {hasReviews ? (
               reviews.map((review, index) => (
                 <tr key={`${review.name}-${index}`}>
-                  <th scope="row">
-                    {review.name}
-                    {review.type && (
-                      <span className={styles.reviewType}>{review.type}</span>
-                    )}
-                  </th>
+                  <th scope="row">{review.name}</th>
+                  <td data-label="Type">{review.type || "—"}</td>
                   <td data-label="Rating">
                     <RatingStars rating={review.rating} />
                   </td>
@@ -137,7 +134,7 @@ export function TestimonialBoard({ reviews }: TestimonialBoardProps) {
               ))
             ) : (
               <tr>
-                <td colSpan={3} className={styles.emptyTable}>
+                <td colSpan={4} className={styles.emptyTable}>
                   No client reviews have been published yet.
                 </td>
               </tr>

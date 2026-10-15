@@ -31,7 +31,7 @@ export function ServicesSection() {
               </div>
               <h3>{service.title}</h3>
               <p>{service.description}</p>
-              <ServiceAction serviceId={service.id} title={service.title} />
+              {/* <ServiceAction serviceId={service.id} title={service.title} /> */}
             </article>
           ))}
         </div>

@@ -31,10 +31,6 @@ export function OrientationOption({
             <span className={styles.description}>
               {orientation.description}
             </span>
-            <span className={styles.selection} aria-hidden="true">
-              {isSelected ? "Selected" : "Select session"}
-              <span>{isSelected ? "✓" : "↗"}</span>
-            </span>
           </>
         )}
       </Radio.Content>
