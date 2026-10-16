@@ -179,10 +179,6 @@ main[tabindex="-1"]:focus {
 .action-link--text:hover {
   color: var(--brand-blue-text);
 }
-.action-link span[aria-hidden="true"] {
-  font-size: 1.125rem;
-  font-weight: 500;
-}
 .site-header {
   position: sticky;
   top: 0;

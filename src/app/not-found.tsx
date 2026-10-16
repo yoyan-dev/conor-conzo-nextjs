@@ -5,9 +5,7 @@ export default function NotFound() {
       <p className="eyebrow">404</p>
       <h1>Let&apos;s get you back.</h1>
       <p>This page could not be found.</p>
-      <Link href="/">
-        Back to Coach Conzo <span aria-hidden="true">↗</span>
-      </Link>
+      <Link href="/">Back to Coach Conzo</Link>
     </main>
   );
 }

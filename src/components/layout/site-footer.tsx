@@ -11,7 +11,7 @@ export function SiteFooter() {
           </a>
           <p>Fitness for life. No judgement.</p>
           <a href={`mailto:${coach.email}`}>
-            {coach.email} <span aria-hidden="true">↗</span>
+            {coach.email}
           </a>
         </div>
         <nav className="footer-column" aria-label="Footer navigation">
@@ -32,7 +32,6 @@ export function SiteFooter() {
                 <a href={social.href}>
                   <SocialIcon platform={social.name} />
                   <span>{social.name}</span>
-                  <span aria-hidden="true">↗</span>
                 </a>
               </li>
             ))}
@@ -43,9 +42,7 @@ export function SiteFooter() {
         <p>
           © {new Date().getUTCFullYear()} {coach.name}. All rights reserved.
         </p>
-        <a href="#main">
-          Back to top <span aria-hidden="true">↑</span>
-        </a>
+        <a href="#main">Back to top</a>
       </div>
     </footer>
   );

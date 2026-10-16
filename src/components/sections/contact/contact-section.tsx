@@ -32,9 +32,6 @@ export function ContactSection() {
                     <strong>{social.name}</strong>
                     <span className={styles.handle}>{social.handle}</span>
                   </span>
-                  <span className={styles.arrow} aria-hidden="true">
-                    ↗
-                  </span>
                 </a>
               ))}
             </div>
@@ -42,7 +39,7 @@ export function ContactSection() {
               <div>
                 <span className="eyebrow">Email</span>
                 <a href={`mailto:${coach.email}`}>
-                  {coach.email} <span aria-hidden="true">↗</span>
+                  {coach.email}
                 </a>
               </div>
               <div>

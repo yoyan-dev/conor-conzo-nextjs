@@ -21,7 +21,7 @@ export function FaqSection() {
             right direction.
           </p>
           <ActionLink href="#contact" variant="text">
-            Ask me anything <span aria-hidden="true">↗</span>
+            Ask me anything
           </ActionLink>
         </div>
         <FaqAccordion items={faqs} />
