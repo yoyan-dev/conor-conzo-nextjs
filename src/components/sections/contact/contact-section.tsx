@@ -1,9 +1,10 @@
+import type { FormMode } from "@/types/forms";
 import { coach } from "@/content/coach";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SocialIcon } from "@/components/ui/social-icon";
 import { ContactForm } from "@/components/forms/contact-form";
 import styles from "@/app/assets/css/sections/contact-section.module.css";
-export function ContactSection() {
+export function ContactSection({ mode }: { mode: FormMode }) {
   return (
     <section
       id="contact"
@@ -38,9 +39,7 @@ export function ContactSection() {
             <div className={styles.details}>
               <div>
                 <span className="eyebrow">Email</span>
-                <a href={`mailto:${coach.email}`}>
-                  {coach.email}
-                </a>
+                <a href={`mailto:${coach.email}`}>{coach.email}</a>
               </div>
               <div>
                 <span className="eyebrow">Location</span>
@@ -53,7 +52,7 @@ export function ContactSection() {
             <p className={styles.formIntro}>
               Questions, goals, or a collaboration idea? Start here.
             </p>
-            <ContactForm />
+            <ContactForm mode={mode} />
           </div>
         </div>
       </div>

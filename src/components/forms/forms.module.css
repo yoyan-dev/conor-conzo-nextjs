@@ -127,3 +127,12 @@
   font-size: 0.875rem;
   margin: 0.5rem 0 0;
 }
+
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

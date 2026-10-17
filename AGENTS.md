@@ -10,9 +10,9 @@ Read PRODUCT.md, DESIGN.md, and docs/UI-DEVELOPMENT-PLAN.md before UI implementa
 - Stack: Next.js 16 App Router, React 19, HeroUI v3, Tailwind CSS v4, strict TypeScript.
 - Keep static content in Server Components and client boundaries narrow. Prefer HeroUI's supported component subpaths.
 - Indexing is opt-in through deployment configuration. Never invent the production domain.
-- The existing starter offers an email enquiry link. For the planned UI-only forms, show explicit preview feedback and send no request. Do not simulate booking confirmations.
+- The site offers an email enquiry link and optional Gmail SMTP enquiry forms. Default to local preview with explicit no-request-sent feedback. Send only when FORM_MODE=live is explicitly configured. Never simulate booking confirmations.
 - Validate with npm run lint, npm run typecheck, and npm run build. Run browser checks for visible changes and conversion paths.
 - Review performance, accessibility, semantic structure, and reduced-motion behavior with the design.
 
-- Current scope is UI only. Booking/contact forms are local previews with explicit no-request-sent feedback; live integration and deployment are deferred.
+- Contact and coaching email enquiries are implemented behind an explicit preview/live switch. Preview deployments must remain local previews. Scheduling, payment, visitor autoresponders, and deployment remain deferred.
 - Use kebab-case component filenames and PascalCase component exports. Group layout, sections, coaching interactions, forms, and shared UI by responsibility as specified in docs/UI-DEVELOPMENT-PLAN.md.

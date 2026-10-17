@@ -10,9 +10,13 @@ import { FieldError } from "@heroui/react/field-error";
 import { useCoachingSelection } from "@/components/coaching/coaching-selection";
 import { sessionOptions, isSessionType } from "@/content/sessions";
 import { validateBookingDraft } from "@/lib/form-validation";
-import type { BookingDraft, FormErrors } from "@/types/forms";
+import { useEnquirySubmission } from "@/hooks/use-enquiry-submission";
+import { FormFeedback } from "./form-feedback";
+import { EnquiryHoneypot, FormNotice } from "./form-notice";
+import type { BookingDraft, FormErrors, FormMode } from "@/types/forms";
 import styles from "./forms.module.css";
-export function BookingForm() {
+
+export function BookingForm({ mode = "preview" }: { mode?: FormMode }) {
   const { sessionType, revision, onSessionChange } = useCoachingSelection();
   const [draft, setDraft] = useState<BookingDraft>({
     name: "",
@@ -20,15 +24,16 @@ export function BookingForm() {
     message: "",
   });
   const [errors, setErrors] = useState<FormErrors<BookingDraft>>({});
-  const [previewedRevision, setPreviewedRevision] = useState<number | null>(
-    null,
+  const submission = useEnquirySubmission(
+    mode,
+    JSON.stringify({ ...draft, revision }),
   );
-  const isReady = previewedRevision === revision;
+  const visibleErrors = { ...errors, ...submission.fieldErrors };
   function handleChange(field: keyof BookingDraft, value: string) {
     const next = { ...draft, [field]: value };
     setDraft(next);
-    setPreviewedRevision(null);
-    if (errors[field])
+    submission.reset();
+    if (visibleErrors[field])
       setErrors((current) => ({
         ...current,
         [field]: validateBookingDraft(next)[field],
@@ -40,37 +45,45 @@ export function BookingForm() {
       [field]: validateBookingDraft(draft)[field],
     }));
   }
-  function handlePreviewSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextErrors = validateBookingDraft(draft);
     setErrors(nextErrors);
-    setPreviewedRevision(null);
+    submission.reset();
     const first = Object.keys(nextErrors)[0];
+    const form = event.currentTarget;
     if (first) {
-      event.currentTarget
-        .querySelector<HTMLElement>(`[name="${first}"]`)
-        ?.focus();
+      const input = form.elements.namedItem(first);
+      if (input instanceof HTMLElement) input.focus();
       return;
     }
-    setPreviewedRevision(revision);
+    await submission.submit({ kind: "coaching", ...draft, sessionType }, form);
   }
   return (
     <div className={styles.booking}>
-      <h3 className={styles.heading}>Schedule your session</h3>
+      <h3 className={styles.heading}>
+        {mode === "preview"
+          ? "Schedule your session"
+          : "Enquire about a session"}
+      </h3>
       <Form
         validationBehavior="aria"
-        onSubmit={handlePreviewSubmit}
+        onSubmit={handleSubmit}
         className={styles.form}
-        aria-label="Booking preview"
-        aria-describedby="booking-preview-notice"
+        aria-label={mode === "preview" ? "Booking preview" : "Coaching enquiry"}
+        aria-describedby="booking-form-notice"
+        aria-busy={submission.isSubmitting}
       >
+        <FormNotice mode={mode} id="booking-form-notice" />
+        <EnquiryHoneypot id="booking-website" />
         <TextField
           name="name"
           value={draft.name}
           onChange={(value) => handleChange("name", value)}
           onBlur={() => handleBlur("name")}
           isRequired
-          isInvalid={Boolean(errors.name)}
+          isReadOnly={submission.isSubmitting}
+          isInvalid={Boolean(visibleErrors.name)}
           validationBehavior="aria"
         >
           <Label>Your name</Label>
@@ -79,7 +92,7 @@ export function BookingForm() {
             placeholder="e.g. Jordan Smith"
             maxLength={120}
           />
-          <FieldError>{errors.name}</FieldError>
+          <FieldError>{visibleErrors.name}</FieldError>
         </TextField>
         <TextField
           name="email"
@@ -88,7 +101,8 @@ export function BookingForm() {
           onChange={(value) => handleChange("email", value)}
           onBlur={() => handleBlur("email")}
           isRequired
-          isInvalid={Boolean(errors.email)}
+          isReadOnly={submission.isSubmitting}
+          isInvalid={Boolean(visibleErrors.email)}
           validationBehavior="aria"
         >
           <Label>Email address</Label>
@@ -97,7 +111,7 @@ export function BookingForm() {
             placeholder="you@example.com"
             maxLength={254}
           />
-          <FieldError>{errors.email}</FieldError>
+          <FieldError>{visibleErrors.email}</FieldError>
         </TextField>
         <div className={styles.selectField}>
           <label htmlFor="booking-session">Session type</label>
@@ -105,10 +119,15 @@ export function BookingForm() {
             id="booking-session"
             name="sessionType"
             value={sessionType}
+            disabled={submission.isSubmitting}
+            aria-invalid={Boolean(visibleErrors.sessionType)}
+            aria-describedby={
+              visibleErrors.sessionType ? "session-type-error" : undefined
+            }
             onChange={(event) => {
               if (isSessionType(event.target.value)) {
                 onSessionChange(event.target.value);
-                setPreviewedRevision(null);
+                submission.reset();
               }
             }}
           >
@@ -118,12 +137,19 @@ export function BookingForm() {
               </option>
             ))}
           </select>
+          {visibleErrors.sessionType && (
+            <p id="session-type-error" className="form-error-summary">
+              {visibleErrors.sessionType}
+            </p>
+          )}
         </div>
         <TextField
           name="message"
           value={draft.message}
           onChange={(value) => handleChange("message", value)}
-          isInvalid={Boolean(errors.message)}
+          onBlur={() => handleBlur("message")}
+          isReadOnly={submission.isSubmitting}
+          isInvalid={Boolean(visibleErrors.message)}
           validationBehavior="aria"
         >
           <Label>
@@ -135,11 +161,26 @@ export function BookingForm() {
             rows={4}
             maxLength={2000}
           />
-          <FieldError>{errors.message}</FieldError>
+          <FieldError>{visibleErrors.message}</FieldError>
         </TextField>
-        <Button type="submit" variant="primary" className={styles.submit}>
-          Preview request
+        <Button
+          type="submit"
+          variant="primary"
+          className={styles.submit}
+          isDisabled={!submission.isHydrated || submission.isSubmitting}
+        >
+          {submission.isSubmitting
+            ? "Sending…"
+            : mode === "preview"
+              ? "Preview request"
+              : "Send enquiry"}
         </Button>
+        <FormFeedback
+          status={submission.status}
+          hasErrors={Object.values(visibleErrors).some(Boolean)}
+          message={submission.message}
+          kind="coaching"
+        />
       </Form>
     </div>
   );

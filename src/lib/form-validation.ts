@@ -2,7 +2,8 @@ import type { BookingDraft, ContactDraft, FormErrors } from "@/types/forms";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function emailError(value: string) {
   if (!value.trim()) return "Enter your email address.";
-  if (!emailPattern.test(value.trim())) return "Enter a valid email address.";
+  if (!emailPattern.test(value.trim()) || /[<>()\[\],;:\x22\\]/.test(value))
+    return "Enter a valid email address.";
   if (value.length > 254) return "Use an email address under 255 characters.";
 }
 export function validateBookingDraft(
