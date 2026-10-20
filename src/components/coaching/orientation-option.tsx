@@ -1,4 +1,6 @@
 "use client";
+import Image from "next/image";
+import { orientationImages } from "@/content/card-images";
 import { Radio } from "@heroui/react/radio";
 import type { Orientation } from "@/types/coaching";
 import styles from "@/app/assets/css/sections/orientations-section.module.css";
@@ -7,6 +9,7 @@ export function OrientationOption({
 }: {
   orientation: Orientation;
 }) {
+  const photo = orientationImages[orientation.id];
   return (
     <Radio
       value={orientation.id}
@@ -14,8 +17,19 @@ export function OrientationOption({
       aria-label={`${orientation.level}: ${orientation.title}`}
     >
       <Radio.Content className={styles.optionContent}>
-        {({ isSelected }) => (
+        {() => (
           <>
+            <span className={styles.imageFrame} aria-hidden="true">
+              <Image
+                src={photo.src}
+                alt=""
+                fill
+                quality={90}
+                sizes="(min-width: 82rem) 337px, (min-width: 48rem) 27vw, 88vw"
+                className={styles.image}
+                style={{ objectPosition: photo.position }}
+              />
+            </span>
             <span className={styles.optionTop}>
               <span className="eyebrow">{orientation.level}</span>
               <Radio.Control className={styles.control}>

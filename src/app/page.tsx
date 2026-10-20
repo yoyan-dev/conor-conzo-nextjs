@@ -10,6 +10,7 @@ import { BookingSection } from "@/components/sections/booking/booking-section";
 import { OrientationsSection } from "@/components/sections/orientations/orientations-section";
 import { TestimonialsSection } from "@/components/sections/testimonials/testimonials-section";
 import { FaqSection } from "@/components/sections/faq/faq-section";
+import { GallerySection } from "@/components/sections/gallery/gallery-section";
 import { ContactSection } from "@/components/sections/contact/contact-section";
 import { SectionNavigation } from "@/components/layout/section-navigation";
 import { ScrollReveals } from "@/components/ui/scroll-reveals";
@@ -29,6 +30,7 @@ export default async function Home() {
         <BookingSection introduction={<BookingIntroduction />} mode={mode} />
         <TestimonialsSection />
         <FaqSection />
+        <GallerySection />
         <ContactSection mode={mode} />
       </main>
       <SiteFooter />
