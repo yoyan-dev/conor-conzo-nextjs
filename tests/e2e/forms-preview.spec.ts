@@ -71,3 +71,43 @@ test("contact requires a message and keeps preview content local", async ({
   );
   expect(submissions).toEqual([]);
 });
+
+test("preview endpoint rejects direct submissions without sending", async ({
+  request,
+}) => {
+  const response = await request.post("/api/enquiries", {
+    headers: { Origin: "http://127.0.0.1:3001" },
+    data: {
+      kind: "contact",
+      email: "visitor@example.test",
+      message: "Preview only.",
+    },
+  });
+  expect(response.status()).toBe(503);
+  expect(response.headers()["cache-control"]).toBe("no-store");
+  expect(await response.json()).toMatchObject({
+    ok: false,
+    message: expect.stringContaining("preview mode"),
+  });
+});
+
+test("forms cannot expose details through native GET submission without JavaScript", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto("http://127.0.0.1:3001");
+  const form = page.getByRole("form", { name: "Contact preview", exact: true });
+  await expect(
+    form.getByRole("button", { name: "Preview message", exact: true }),
+  ).toBeDisabled();
+  await expect(
+    form.getByRole("link", { name: "email Coach Conzo" }),
+  ).toHaveAttribute("href", "mailto:yoyan.glophics@gmail.com");
+  await form
+    .getByRole("textbox", { name: /your email/i })
+    .fill("visitor@example.test");
+  await form.getByRole("textbox", { name: /your email/i }).press("Enter");
+  await expect(page).toHaveURL("http://127.0.0.1:3001/");
+  await context.close();
+});

@@ -3,7 +3,7 @@ import type { Service, Orientation, Testimonial } from "@/types/coaching";
 export const coach = {
   name: "Coach Conzo",
   brand: "TRYHRD",
-  email: "coachconzo@gmail.com",
+  email: "yoyan.glophics@gmail.com",
   headline: ["Stronger bodies.", "No judgement.", "Fitness for life."],
   introduction:
     "Personal Trainer & Fitness Coach helping you build strength, confidence, and consistency without taking the fun out of fitness.",

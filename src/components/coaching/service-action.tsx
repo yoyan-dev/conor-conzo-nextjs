@@ -22,8 +22,7 @@ export function ServiceAction({
     >
       {isCollaboration
         ? "Discuss a collaboration"
-        : `Ask about ${title.toLowerCase()}`}{" "}
-      <span aria-hidden="true">↗</span>
+        : `Ask about ${title.toLowerCase()}`}
     </ActionLink>
   );
 }

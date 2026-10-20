@@ -1,25 +1,23 @@
 import { coach } from "@/content/coach";
 import { navigationItems } from "@/content/navigation";
 import { SocialIcon } from "@/components/ui/social-icon";
-export function SiteFooter() {
+export function SiteFooter({ homePath = "" }: { homePath?: string }) {
   return (
     <footer className="site-footer">
       <div className="page-container footer-inner">
         <div className="footer-brand">
-          <a href="#main" className="wordmark">
+          <a href={homePath || "#main"} className="wordmark">
             COACH <span>CONZO</span>
           </a>
           <p>Fitness for life. No judgement.</p>
-          <a href={`mailto:${coach.email}`}>
-            {coach.email} <span aria-hidden="true">↗</span>
-          </a>
+          <a href={`mailto:${coach.email}`}>{coach.email}</a>
         </div>
         <nav className="footer-column" aria-label="Footer navigation">
           <h2 className="footer-heading">Explore</h2>
           <ul className="footer-links">
             {navigationItems.map((item) => (
               <li key={item.id}>
-                <a href={`#${item.id}`}>{item.label}</a>
+                <a href={`${homePath}#${item.id}`}>{item.label}</a>
               </li>
             ))}
           </ul>
@@ -32,7 +30,6 @@ export function SiteFooter() {
                 <a href={social.href}>
                   <SocialIcon platform={social.name} />
                   <span>{social.name}</span>
-                  <span aria-hidden="true">↗</span>
                 </a>
               </li>
             ))}
@@ -43,9 +40,7 @@ export function SiteFooter() {
         <p>
           © {new Date().getUTCFullYear()} {coach.name}. All rights reserved.
         </p>
-        <a href="#main">
-          Back to top <span aria-hidden="true">↑</span>
-        </a>
+        <a href="#main">Back to top</a>
       </div>
     </footer>
   );

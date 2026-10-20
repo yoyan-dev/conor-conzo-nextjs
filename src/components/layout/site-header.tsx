@@ -19,7 +19,7 @@ export function SiteHeader() {
             ))}
         </nav>
         <FreeCallAction className="header-action">
-          Book a free call <span aria-hidden="true">↗</span>
+          Book a free call
         </FreeCallAction>
         <MobileNavigation />
       </div>

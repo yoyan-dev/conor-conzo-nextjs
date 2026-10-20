@@ -1,46 +1,75 @@
 # TRYHRD / Coach Conzo
 
-Next.js 16.4 App Router, React 19.3, HeroUI 3.2.6, Tailwind CSS 4.3, TypeScript, and ESLint. The repository includes a runnable foundation preview, source copy, the supplied portrait, and a researched implementation plan. The complete landing page and booking backend are future implementation phases, not completed features.
+Next.js 16 App Router, React 19, HeroUI v3, Tailwind CSS v4, and strict TypeScript. The existing homepage is a foundation preview, not a claim of complete Figma implementation. The supplied portrait and structured coaching copy remain the content sources.
 
 ## Run
 
-Use Node.js 22 or newer (an active LTS is recommended for deployment).
+Use Node.js 22 or newer.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open http://localhost:3000. Use `npm run lint`, `npm run typecheck`, and `npm run build` to validate. Type generation for Next routes happens during build. To exercise the production build use `npm run start`.
+Open http://localhost:3000. For a production build, run `npm run build` and `npm run start`.
 
-## Current scope
+## Contact and coaching enquiries
 
-The current request is to plan the complete UI only. Follow [docs/UI-DEVELOPMENT-PLAN.md](docs/UI-DEVELOPMENT-PLAN.md): primary Figma Design node 14:56 controls the visual system; Figma Make contributes interaction ideas; the Google Doc controls copy. Backend integration and deployment are deferred. No full-page implementation is marked complete by this planning update.
+Both forms support local preview and optional Gmail delivery. Preview is the default: validation and feedback happen locally, with no submission request. Vercel preview deployments always use preview mode, even if live mode was configured.
+
+Copy `.env.example` to `.env.local`. Only three settings are added for email:
+
+```dotenv
+FORM_MODE=preview
+SMTP_USER=
+SMTP_APP_PASSWORD=
+```
+
+To enable real enquiries, set `FORM_MODE=live`, fill in the authenticating Gmail account and a newly generated Google App Password, and restart the server. Google App Passwords require 2-Step Verification. Keep credentials in local or hosting secrets; never commit them or prefix them with NEXT_PUBLIC_. Do not reuse credentials from another repository.
+
+Gmail's SMTP host and port are fixed in code: smtp.gmail.com:587 with STARTTLS required. Notifications go to `coach.email` in `src/content/coach.ts`, currently coachconzo@gmail.com. The authenticated account is the sender; the visitor's validated email is Reply-To. Each submission sends one plain-text coach notification. It sends no visitor autoresponder, calendar invitation, booking confirmation, or payment request.
+
+The existing `SITE_URL` must be the confirmed HTTPS origin when running production live mode. Requests from other origins are rejected. Local development can use its own request origin without SITE_URL. The form mode is resolved on the server per request, so restarting with a new mode does not require rebuilding. Static coaching content stays in Server Components.
+
+Messages are emailed to the coach so they can respond. The app does not store enquiries in a database. Visitors are asked to avoid sensitive health information. SMTP acceptance does not guarantee final inbox delivery; failed or uncertain submissions preserve entered details and provide the email fallback. There are no automatic retries.
+
+## API and abuse controls
+
+`POST /api/enquiries` accepts contact or coaching enquiries. The Node.js Route Handler independently validates types, lengths, allowed session IDs, and fixed payload fields. It rejects arbitrary recipient/header overrides, filled honeypots, non-JSON input, foreign origins, and request bodies over 16 KiB.
+
+A small process-wide limiter allows at most 10 same-origin JSON attempts per minute across both forms. It does not persist across server restarts or coordinate between instances. Before public live deployment, configure a shared rate limit in the hosting firewall or gateway. Origin checks and honeypots alone do not stop automated clients. No additional service or environment variables are introduced by this implementation.
+
+Live mode without complete SMTP configuration or a production origin fails with explicit error feedback; it never reports preview success. Other hosting providers must explicitly configure preview deployments with FORM_MODE=preview and omit SMTP secrets. Do not deploy on an Edge-only or static-export host; Gmail SMTP requires outbound TCP from a Node.js runtime.
+
+## Validation
+
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npm run test:unit
+npm run test:e2e
+npm run test:e2e:live
+```
+
+Unit tests mock SMTP, including rejection and missing configuration. Browser tests cover preview conversion paths, live submitting/success/error states, session selection, mobile layout, and accessibility. Live browser tests intercept the API and start their server with empty SMTP credentials; no test sends real email. Browser tests require the production build and Chrome on Windows (Chromium elsewhere).
+
+For a real delivery check, configure your own credentials locally, submit once with controlled content, inspect the received coach notification, and verify Reply addresses the visitor. Automated checks do not establish actual Gmail delivery.
+
+## Content and deployment
+
+Indexing remains disabled by default and independent of email. Set the existing SITE_URL and ENABLE_INDEXING only for the final website. Vercel preview deployments remain noindex. Optional BOOKING_URL behavior is unchanged.
+
+Advanced orientation duration remains unresolved. This integration preserves the existing testimonial content. Scheduling, payments, durable queues, delivery webhooks, analytics, and deployment are deferred.
+
+AGENTS.md references PRODUCT.md, DESIGN.md, docs/UI-DEVELOPMENT-PLAN.md, docs/PROJECT-PLAN.md, and docs/source-copy.txt, which are missing from this checkout. Restore those sources before further design or editorial work.
 
 ## Project map
 
-- `docs/UI-DEVELOPMENT-PLAN.md`: active UI roadmap, component/file structure, naming conventions, interaction states, dependencies, and acceptance checks.
-- `docs/PROJECT-PLAN.md`: source study, section plan, performance and SEO budgets, accessibility, conversion flow, roadmap, launch acceptance criteria.
-- `docs/source-copy.txt`: snapshot of the supplied Google Doc, captured 2026-10-14.
-- `PRODUCT.md`: audience, brand, and strategic constraints.
-- `DESIGN.md`: source priority, observed visual direction, and planned tokens.
-- `src/content/coach.ts`: structured copy for services, orientations, FAQ, and social links. Reviews are intentionally empty; advanced duration is intentionally unresolved.
-- `src/app`: server-rendered foundation, metadata, social image, crawler controls, icon, and 404 page.
-- `src/components/contact-button.tsx`: small HeroUI client boundary.
-- `public/images/coach-conzo.png`: user-supplied portrait, served with Next Image optimisation.
-
-## Configuration
-
-Copy `.env.example` to `.env.local` and set the real production `SITE_URL` and optional public HTTPS `BOOKING_URL`. Do not put private keys or confidential tokens in a booking URL. Without a booking URL, the CTA explicitly offers an email enquiry and opens the visitor's email client. It does not submit a booking or send an email automatically.
-
-Indexing is disabled by default. Set `ENABLE_INDEXING=true` only when the final website is ready. Vercel preview deployments remain noindex. Other hosting providers must set `ENABLE_INDEXING=false` on previews. Metadata and crawler routes depend on build-time configuration; rebuild after changes.
-
-The starter does not include a form endpoint, analytics, a CMS, privacy/terms text, or fabricated testimonials. No analytics cookies or sensitive health intake data are collected. The main Figma requires editor access for connector-based layer extraction; browser review is documented in the plan.
-
-## Deployment
-
-Any Node-compatible Next.js host works; Vercel is a straightforward option. Connect the repository, set the environment values, create a preview, complete the plan's checks, and then publish. This task does not publish or change external service settings.
-
-## Tooling compatibility
-
-ESLint 9.39.5 is pinned because the React, import, and accessibility plugins in the current Next.js lint preset do not yet declare ESLint 10 compatibility. npm marks ESLint 9 as out of support. Track an upgrade of that plugin set; no forced peer overrides are used. Formatting uses Prettier. Next type generation runs before standalone type checking.
+- `src/components/forms`: contact and coaching form UI, notices, and accessible feedback.
+- `src/hooks/use-enquiry-submission.ts`: local previews and live submission states.
+- `src/app/api/enquiries/route.ts`: Node.js submission endpoint.
+- `src/lib/server`: private form-mode, request handling, and Gmail delivery.
+- `src/lib/enquiry-validation.ts`: strict payload validation using existing field rules.
+- `src/content/coach.ts` and `src/content/sessions.ts`: approved coach details and session choices.
+- `docs/NODEMAILER-IMPLEMENTATION-PLAN.md`: simplified implementation record and remaining activation work.

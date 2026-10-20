@@ -46,7 +46,7 @@ export function OrientationsSection() {
               if (!selected) onSessionChange("starter");
             }}
           >
-            Book an orientation <span aria-hidden="true">↗</span>
+            Book an orientation
           </ActionLink>
           <p className="microcopy">
             {selected

@@ -41,7 +41,6 @@ export function MobileNavigation() {
             }}
           >
             {item.label}
-            <span aria-hidden="true">↗</span>
           </a>
         ))}
       </nav>

@@ -8,17 +8,22 @@ import { TextArea } from "@heroui/react/textarea";
 import { Label } from "@heroui/react/label";
 import { FieldError } from "@heroui/react/field-error";
 import { validateContactDraft } from "@/lib/form-validation";
-import type { ContactDraft, FormErrors } from "@/types/forms";
+import { useEnquirySubmission } from "@/hooks/use-enquiry-submission";
+import { FormFeedback } from "./form-feedback";
+import { EnquiryHoneypot, FormNotice } from "./form-notice";
+import type { ContactDraft, FormErrors, FormMode } from "@/types/forms";
 import styles from "./forms.module.css";
-export function ContactForm() {
+
+export function ContactForm({ mode = "preview" }: { mode?: FormMode }) {
   const [draft, setDraft] = useState<ContactDraft>({ email: "", message: "" });
   const [errors, setErrors] = useState<FormErrors<ContactDraft>>({});
-  const [isReady, setIsReady] = useState(false);
+  const submission = useEnquirySubmission(mode, JSON.stringify(draft));
+  const visibleErrors = { ...errors, ...submission.fieldErrors };
   function handleChange(field: keyof ContactDraft, value: string) {
     const next = { ...draft, [field]: value };
     setDraft(next);
-    setIsReady(false);
-    if (errors[field])
+    submission.reset();
+    if (visibleErrors[field])
       setErrors((current) => ({
         ...current,
         [field]: validateContactDraft(next)[field],
@@ -30,28 +35,31 @@ export function ContactForm() {
       [field]: validateContactDraft(draft)[field],
     }));
   }
-  function handlePreviewSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextErrors = validateContactDraft(draft);
     setErrors(nextErrors);
-    setIsReady(false);
+    submission.reset();
     const first = Object.keys(nextErrors)[0];
+    const form = event.currentTarget;
     if (first) {
-      event.currentTarget
-        .querySelector<HTMLElement>(`[name="${first}"]`)
-        ?.focus();
+      const input = form.elements.namedItem(first);
+      if (input instanceof HTMLElement) input.focus();
       return;
     }
-    setIsReady(true);
+    await submission.submit({ kind: "contact", ...draft }, form);
   }
   return (
     <Form
       validationBehavior="aria"
-      onSubmit={handlePreviewSubmit}
+      onSubmit={handleSubmit}
       className={styles.form}
-      aria-label="Contact preview"
-      aria-describedby="contact-preview-notice"
+      aria-label={mode === "preview" ? "Contact preview" : "Contact enquiry"}
+      aria-describedby="contact-form-notice"
+      aria-busy={submission.isSubmitting}
     >
+      <FormNotice mode={mode} id="contact-form-notice" />
+      <EnquiryHoneypot id="contact-website" />
       <TextField
         name="email"
         type="email"
@@ -59,7 +67,8 @@ export function ContactForm() {
         onChange={(value) => handleChange("email", value)}
         onBlur={() => handleBlur("email")}
         isRequired
-        isInvalid={Boolean(errors.email)}
+        isReadOnly={submission.isSubmitting}
+        isInvalid={Boolean(visibleErrors.email)}
         validationBehavior="aria"
       >
         <Label>Your email</Label>
@@ -68,7 +77,7 @@ export function ContactForm() {
           placeholder="you@example.com"
           maxLength={254}
         />
-        <FieldError>{errors.email}</FieldError>
+        <FieldError>{visibleErrors.email}</FieldError>
       </TextField>
       <TextField
         name="message"
@@ -76,7 +85,8 @@ export function ContactForm() {
         onChange={(value) => handleChange("message", value)}
         onBlur={() => handleBlur("message")}
         isRequired
-        isInvalid={Boolean(errors.message)}
+        isReadOnly={submission.isSubmitting}
+        isInvalid={Boolean(visibleErrors.message)}
         validationBehavior="aria"
       >
         <Label>Your message</Label>
@@ -85,11 +95,26 @@ export function ContactForm() {
           rows={4}
           maxLength={2000}
         />
-        <FieldError>{errors.message}</FieldError>
+        <FieldError>{visibleErrors.message}</FieldError>
       </TextField>
-      <Button type="submit" className={styles.submit} variant="primary">
-        Send message
+      <Button
+        type="submit"
+        className={styles.submit}
+        variant="primary"
+        isDisabled={!submission.isHydrated || submission.isSubmitting}
+      >
+        {submission.isSubmitting
+          ? "Sending…"
+          : mode === "preview"
+            ? "Preview message"
+            : "Send message"}
       </Button>
+      <FormFeedback
+        status={submission.status}
+        hasErrors={Object.values(visibleErrors).some(Boolean)}
+        message={submission.message}
+        kind="contact"
+      />
     </Form>
   );
 }
