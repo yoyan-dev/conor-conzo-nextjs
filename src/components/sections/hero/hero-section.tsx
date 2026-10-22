@@ -1,5 +1,5 @@
 import Image from "next/image";
-import portrait from "../../../../public/images/coach-conzo.png";
+import portrait from "../../../../public/images/hero/coach-conzo.png";
 import { coach } from "@/content/coach";
 import { ActionLink } from "@/components/ui/action-link";
 import { FreeCallAction } from "@/components/coaching/free-call-action";

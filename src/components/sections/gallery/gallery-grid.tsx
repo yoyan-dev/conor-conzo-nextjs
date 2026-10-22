@@ -15,7 +15,7 @@ export function GalleryGrid({ photos }: { photos: readonly GalleryPhoto[] }) {
                 alt={photo.alt}
                 fill
                 quality={90}
-                sizes="(min-width: 82rem) 292px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, (min-width: 36rem) 46vw, 92vw"
+                sizes="(min-width: 82rem) 350px, (min-width: 64rem) 30vw, (min-width: 36rem) 46vw, 92vw"
                 className={styles.image}
                 style={{ objectPosition: photo.position }}
               />

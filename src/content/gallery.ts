@@ -1,10 +1,9 @@
-import portrait from "../../public/images/coach-conzo.png";
+import portrait from "../../public/images/hero/coach-conzo.png";
 import type { StaticImageData } from "next/image";
 import { orientationImages } from "./card-images";
-import poster from "../../public/images/coaching/coach-feedback-poster.png";
-import strength from "../../public/images/coaching/coach-strength.jpg";
-import rooftop from "../../public/images/coaching/rooftop-moment.png";
-import collaboration from "../../public/images/coaching/gym-collaboration.jpeg";
+import poster from "../../public/images/gallery/coach-feedback-poster.png";
+import rooftop from "../../public/images/gallery/rooftop-moment.png";
+import collaboration from "../../public/images/gallery/gym-collaboration.jpeg";
 
 export type GalleryPhoto = {
   id: string;
@@ -16,12 +15,6 @@ export type GalleryPhoto = {
 export const HOME_GALLERY_LIMIT = 8;
 
 const galleryCandidates = [
-  {
-    id: "strength",
-    src: strength,
-    alt: "Coach Conzo looking over his shoulder in gym clothes",
-    position: "50% 45%",
-  },
   {
     id: "rooftop",
     src: rooftop,
