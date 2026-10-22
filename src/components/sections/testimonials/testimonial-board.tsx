@@ -8,13 +8,17 @@ type TestimonialBoardProps = {
 
 export function TestimonialBoard({ reviews }: TestimonialBoardProps) {
   const hasReviews = reviews.length > 0;
-  const average = hasReviews
-    ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+  const ratings = reviews.flatMap((review) =>
+    review.rating === undefined ? [] : [review.rating],
+  );
+  const hasRatings = ratings.length > 0;
+  const average = hasRatings
+    ? ratings.reduce<number>((sum, rating) => sum + rating, 0) / ratings.length
     : null;
   const distribution = [5, 4, 3, 2, 1]
     .map((rating) => ({
       rating,
-      count: reviews.filter((review) => review.rating === rating).length,
+      count: ratings.filter((value) => value === rating).length,
     }))
     .filter(({ rating, count }) => rating >= 3 || count > 0);
 
@@ -51,7 +55,9 @@ export function TestimonialBoard({ reviews }: TestimonialBoardProps) {
           {average !== null && (
             <span aria-hidden="true">
               <RatingStars
-                rating={Math.round(average) as Testimonial["rating"]}
+                rating={
+                  Math.round(average) as NonNullable<Testimonial["rating"]>
+                }
               />
             </span>
           )}
@@ -62,18 +68,23 @@ export function TestimonialBoard({ reviews }: TestimonialBoardProps) {
               {reviews.length === 1 ? "review" : "reviews"}
             </span>
           )}
+          {hasReviews && ratings.length !== reviews.length && (
+            <span className={styles.scoreLabel}>
+              {ratings.length} {ratings.length === 1 ? "rating" : "ratings"}
+            </span>
+          )}
         </div>
         <div className={styles.distribution}>
-          {hasReviews ? (
+          {hasRatings ? (
             distribution.map(({ rating, count }) => {
-              const percent = (count / reviews.length) * 100;
+              const percent = (count / ratings.length) * 100;
               return (
                 <div className={styles.ratingRow} key={rating}>
                   <span>{rating}</span>
                   <div
                     className={styles.track}
                     role="img"
-                    aria-label={`${count} of ${reviews.length} reviews rated ${rating} out of 5`}
+                    aria-label={`${count} of ${ratings.length} reviews rated ${rating} out of 5`}
                   >
                     <span
                       className={styles.fill}
@@ -125,7 +136,11 @@ export function TestimonialBoard({ reviews }: TestimonialBoardProps) {
                   <th scope="row">{review.name}</th>
                   <td data-label="Type">{review.type || "—"}</td>
                   <td data-label="Rating">
-                    <RatingStars rating={review.rating} />
+                    {review.rating === undefined ? (
+                      "Not rated"
+                    ) : (
+                      <RatingStars rating={review.rating} />
+                    )}
                   </td>
                   <td data-label="Comment" className={styles.comment}>
                     {review.quote}

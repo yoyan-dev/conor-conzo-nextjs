@@ -26,7 +26,7 @@ for (const { label, width, height } of [
     await expect(
       section.getByRole("table", { name: "Client testimonials" }),
     ).toBeVisible();
-    await expect(section.locator("tbody tr")).toHaveCount(4);
+    await expect(section.locator("tbody tr")).toHaveCount(5);
     await expect(
       section.getByRole("rowheader", { name: "Vincent" }),
     ).toBeVisible();
@@ -35,6 +35,35 @@ for (const { label, width, height } of [
     ).toBeVisible();
     await expect(
       section.getByRole("rowheader", { name: "Alex" }),
+    ).toBeVisible();
+    const giorgio = section.getByRole("row").filter({
+      has: page.getByRole("rowheader", { name: "Giorgio Basile", exact: true }),
+    });
+    await expect(giorgio).toContainText(
+      "Re-found my love of weightlifting through my sessions with Connor!",
+    );
+    await expect(giorgio).toContainText(
+      "achieve PBs in my squat i thought were unattainable.",
+    );
+    await expect(giorgio).toContainText(
+      "Thanks for the confidence and new set of wheels, Connor!",
+    );
+    await expect(
+      giorgio.getByRole("cell", { name: /Not rated$/ }),
+    ).toBeVisible();
+    await expect(giorgio.getByRole("img")).toHaveCount(0);
+    const overview = section.getByRole("group", { name: "Rating overview" });
+    await expect(
+      overview.getByText("5 client reviews", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      overview.getByText("4 ratings", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      overview.getByRole("img", {
+        name: "4 of 4 reviews rated 5 out of 5",
+        exact: true,
+      }),
     ).toBeVisible();
     await expect(section.getByText(/hypermobility/)).toBeVisible();
     await expect(section.getByText("Jake M.")).toHaveCount(0);

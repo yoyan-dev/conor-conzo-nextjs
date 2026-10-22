@@ -113,9 +113,8 @@ export const faqs = [
   },
 ] as const;
 
-// Transcribed from the four client message images in the user-provided source document.
-// Use only clearly visible first names; one screenshot truncates the name.
-// The screenshots do not provide stable calendar dates.
+// Transcribed from client messages supplied by the user. Preserve their wording.
+// Include names and star ratings only where supplied; do not infer calendar dates.
 export const testimonials: Testimonial[] = [
   {
     name: "Vincent",
@@ -141,5 +140,11 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     quote:
       "5 stars, extremely knowledgeable, totally able to work with my hypermobility, supportive like the ultimate hype man and set me up for long term gains",
+  },
+  {
+    // Supplied WhatsApp screenshot: no star rating or calendar date is shown.
+    name: "Giorgio Basile",
+    quote:
+      "Re-found my love of weightlifting through my sessions with Connor! For the longest time, I was stagnating in the gym and feeling a real loss of confidence from past injuries. Through Connor's training, I was able to build back my former strength and achieve PBs in my squat i thought were unattainable. I really appreciate his dedication, expertise, and ability to make me feel confident to reach higher. I look forward to my gym sessions every week.\nThanks for the confidence and new set of wheels, Connor!",
   },
 ];
