@@ -69,7 +69,7 @@ export function BookingForm() {
         aria-describedby="booking-form-notice"
         aria-busy={submission.isSubmitting}
       >
-        <FormNotice id="booking-form-notice" />
+        {/* <FormNotice /> */}
         <EnquiryHoneypot id="booking-website" />
         <TextField
           name="name"

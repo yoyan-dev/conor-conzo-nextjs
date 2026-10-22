@@ -1,3 +1,4 @@
+import { TestimonialPagination } from "./testimonial-pagination";
 import type { Testimonial } from "@/types/coaching";
 import { RatingStars } from "@/components/ui/rating-stars";
 import { styles } from "@/components/sections/testimonials/testimonials-styles";
@@ -116,47 +117,24 @@ export function TestimonialBoard({ reviews }: TestimonialBoardProps) {
         </div>
       </div>
 
-      <div className={styles.tableFrame}>
-        <table className={styles.table}>
-          <caption className={styles.visuallyHidden}>
-            Client testimonials
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Client</th>
-              <th scope="col">Type</th>
-              <th scope="col">Rating</th>
-              <th scope="col">Comment</th>
-            </tr>
-          </thead>
-          <tbody>
-            {hasReviews ? (
-              reviews.map((review, index) => (
-                <tr key={`${review.name}-${index}`}>
-                  <th scope="row">{review.name}</th>
-                  <td data-label="Type">{review.type || "—"}</td>
-                  <td data-label="Rating">
-                    {review.rating === undefined ? (
-                      "Not rated"
-                    ) : (
-                      <RatingStars rating={review.rating} />
-                    )}
-                  </td>
-                  <td data-label="Comment" className={styles.comment}>
-                    {review.quote}
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={4} className={styles.emptyTable}>
-                  No client reviews have been published yet.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <TestimonialPagination
+        rows={reviews.map((review, index) => (
+          <tr key={`${review.name}-${index}`}>
+            <th scope="row">{review.name}</th>
+            <td data-label="Type">{review.type || "—"}</td>
+            <td data-label="Rating">
+              {review.rating === undefined ? (
+                "Not rated"
+              ) : (
+                <RatingStars rating={review.rating} />
+              )}
+            </td>
+            <td data-label="Comment" className={styles.comment}>
+              {review.quote}
+            </td>
+          </tr>
+        ))}
+      />
     </div>
   );
 }

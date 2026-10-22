@@ -27,6 +27,10 @@ for (const { label, width, height } of [
       section.getByRole("table", { name: "Client testimonials" }),
     ).toBeVisible();
     await expect(section.locator("tbody tr")).toHaveCount(5);
+    const pagination = section.getByRole("navigation", {
+      name: "Testimonial pagination",
+    });
+    await expect(pagination).toHaveCount(0);
     await expect(
       section.getByRole("rowheader", { name: "Vincent" }),
     ).toBeVisible();

@@ -58,7 +58,7 @@ export function ContactForm() {
       aria-describedby="contact-form-notice"
       aria-busy={submission.isSubmitting}
     >
-      <FormNotice id="contact-form-notice" />
+      {/* <FormNotice id="contact-form-notice" /> */}
       <EnquiryHoneypot id="contact-website" />
       <TextField
         name="email"

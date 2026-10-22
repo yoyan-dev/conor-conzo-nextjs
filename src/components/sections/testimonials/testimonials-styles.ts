@@ -79,6 +79,16 @@ export const styles = {
     "[@media_(max-width:_47.999rem)]:[&_tbody_.testimonials-emptyTable]:m-0",
     "[@media_(max-width:_47.999rem)]:[&_tbody_.testimonials-emptyTable]:p-[1.25rem_0]",
   ].join(" "),
+  results:
+    "scroll-mt-24 focus-visible:outline-2 focus-visible:outline-[var(--focus)] focus-visible:outline-offset-4",
+  pagination: "mt-6 items-stretch gap-4 sm:items-center",
+  paginationSummary:
+    "self-auto [font-size:0.8125rem] [color:var(--text-muted)] leading-[1.6]",
+  paginationControls:
+    "m-0 grid w-full grid-cols-2 list-none gap-3 p-0 sm:flex sm:w-auto [&>li]:w-full sm:[&>li]:w-auto",
+  paginationButton:
+    "h-auto min-h-11 w-full gap-2 rounded-[100px] [border:1px_solid_var(--divider)] [background:transparent] px-4 py-2 [color:var(--foreground)] [font-size:0.8125rem] font-[700] data-[hovered=true]:[background:var(--surface-selected)] disabled:opacity-40 disabled:cursor-not-allowed sm:w-auto",
+  paginationIcon: "flex size-4 shrink-0 items-center [&>svg]:size-4",
   comment: "testimonials-comment whitespace-pre-line",
   reviewType:
     "testimonials-reviewType block mt-2 [color:var(--text-muted)] [font-size:0.8125rem] font-[450] leading-[1.5]",
