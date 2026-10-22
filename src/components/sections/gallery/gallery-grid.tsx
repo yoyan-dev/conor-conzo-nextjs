@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { GalleryPhoto } from "@/content/gallery";
 import { GalleryImageButton, GalleryLightbox } from "./gallery-lightbox";
-import styles from "@/app/assets/css/sections/gallery-section.module.css";
+import { styles } from "@/components/sections/gallery/gallery-styles";
 
 export function GalleryGrid({ photos }: { photos: readonly GalleryPhoto[] }) {
   return (

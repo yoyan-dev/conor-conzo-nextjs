@@ -3,7 +3,7 @@ import portrait from "../../../../public/images/hero/coach-conzo.png";
 import { coach } from "@/content/coach";
 import { ActionLink } from "@/components/ui/action-link";
 import { FreeCallAction } from "@/components/coaching/free-call-action";
-import styles from "@/app/assets/css/sections/hero-section.module.css";
+import { styles } from "@/components/sections/hero/hero-styles";
 
 export function HeroSection() {
   const [firstLine, ...remainingLines] = coach.headline;

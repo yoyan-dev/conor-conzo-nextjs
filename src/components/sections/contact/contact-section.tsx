@@ -1,24 +1,28 @@
+import { sharedStyles } from "@/components/ui/shared-styles";
 import type { FormMode } from "@/types/forms";
 import { coach } from "@/content/coach";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SocialIcon } from "@/components/ui/social-icon";
 import { ContactForm } from "@/components/forms/contact-form";
-import styles from "@/app/assets/css/sections/contact-section.module.css";
+import { styles } from "@/components/sections/contact/contact-styles";
 export function ContactSection({ mode }: { mode: FormMode }) {
   return (
     <section
       id="contact"
       tabIndex={-1}
       aria-labelledby="contact-heading"
-      className="section surface-section"
+      className={[
+        sharedStyles["section"],
+        sharedStyles["surface-section"],
+      ].join(" ")}
     >
-      <div className="page-container">
+      <div className={sharedStyles["page-container"]}>
         <SectionHeading eyebrow="Find me" id="contact-heading">
           Social & contact.
         </SectionHeading>
         <div className={styles.layout} data-scroll-reveal-group="">
           <div>
-            <p className="eyebrow">Around the internet</p>
+            <p className={sharedStyles["eyebrow"]}>Around the internet</p>
             <div className={styles.socials}>
               {coach.socials.map((social) => (
                 <a
@@ -38,11 +42,11 @@ export function ContactSection({ mode }: { mode: FormMode }) {
             </div>
             <div className={styles.details}>
               <div>
-                <span className="eyebrow">Email</span>
+                <span className={sharedStyles["eyebrow"]}>Email</span>
                 <a href={`mailto:${coach.email}`}>{coach.email}</a>
               </div>
               <div>
-                <span className="eyebrow">Location</span>
+                <span className={sharedStyles["eyebrow"]}>Location</span>
                 <p>Online / Worldwide</p>
               </div>
             </div>

@@ -1,7 +1,8 @@
+import { sharedStyles } from "@/components/ui/shared-styles";
 import type { ReactNode } from "react";
 import type { FormMode } from "@/types/forms";
 import { BookingForm } from "@/components/forms/booking-form";
-import styles from "@/app/assets/css/sections/booking-section.module.css";
+import { styles } from "@/components/sections/booking/booking-styles";
 export function BookingSection({
   introduction,
   mode,
@@ -14,9 +15,9 @@ export function BookingSection({
       id="book"
       tabIndex={-1}
       aria-labelledby="booking-heading"
-      className="section"
+      className={sharedStyles["section"]}
     >
-      <div className={`page-container ${styles.layout}`}>
+      <div className={`${sharedStyles["page-container"]} ${styles.layout}`}>
         {introduction}
         <BookingForm mode={mode} />
       </div>

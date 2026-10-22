@@ -1,9 +1,10 @@
 "use client";
+import { sharedStyles } from "@/components/ui/shared-styles";
 import Image from "next/image";
 import { orientationImages } from "@/content/card-images";
 import { Radio } from "@heroui/react/radio";
 import type { Orientation } from "@/types/coaching";
-import styles from "@/app/assets/css/sections/orientations-section.module.css";
+import { styles } from "@/components/sections/orientations/orientations-styles";
 export function OrientationOption({
   orientation,
 }: {
@@ -31,7 +32,9 @@ export function OrientationOption({
               />
             </span>
             <span className={styles.optionTop}>
-              <span className="eyebrow">{orientation.level}</span>
+              <span className={sharedStyles["eyebrow"]}>
+                {orientation.level}
+              </span>
               <Radio.Control className={styles.control}>
                 <Radio.Indicator />
               </Radio.Control>

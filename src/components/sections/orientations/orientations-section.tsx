@@ -1,4 +1,5 @@
 "use client";
+import { sharedStyles } from "@/components/ui/shared-styles";
 import { RadioGroup } from "@heroui/react/radio-group";
 import { orientations } from "@/content/coach";
 import { useCoachingSelection } from "@/components/coaching/coaching-selection";
@@ -6,7 +7,7 @@ import { OrientationOption } from "@/components/coaching/orientation-option";
 import { ActionLink } from "@/components/ui/action-link";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { isSessionType } from "@/content/sessions";
-import styles from "@/app/assets/css/sections/orientations-section.module.css";
+import { styles } from "@/components/sections/orientations/orientations-styles";
 export function OrientationsSection() {
   const { sessionType, onSessionChange } = useCoachingSelection();
   const selected = orientations.find((item) => item.id === sessionType);
@@ -15,13 +16,16 @@ export function OrientationsSection() {
       id="orientations"
       tabIndex={-1}
       aria-labelledby="orientations-heading"
-      className="section surface-section"
+      className={[
+        sharedStyles["section"],
+        sharedStyles["surface-section"],
+      ].join(" ")}
     >
-      <div className="page-container">
+      <div className={sharedStyles["page-container"]}>
         <SectionHeading eyebrow="Orientations" id="orientations-heading">
           Pick your level.
         </SectionHeading>
-        <p className="section-description">
+        <p className={sharedStyles["section-description"]}>
           Each session is hands on, personalised, and with someone who wants to
           see you succeed.
         </p>
@@ -48,7 +52,7 @@ export function OrientationsSection() {
           >
             Book an orientation
           </ActionLink>
-          <p className="microcopy">
+          <p className={sharedStyles["microcopy"]}>
             {selected
               ? `${selected.title} selected. Your choice carries into the form below.`
               : "Choose a session. We’ll start where you are."}

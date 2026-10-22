@@ -12,7 +12,7 @@ import { useEnquirySubmission } from "@/hooks/use-enquiry-submission";
 import { FormFeedback } from "./form-feedback";
 import { EnquiryHoneypot, FormNotice } from "./form-notice";
 import type { ContactDraft, FormErrors, FormMode } from "@/types/forms";
-import styles from "./forms.module.css";
+import { styles } from "@/components/forms/form-styles";
 
 export function ContactForm({ mode = "preview" }: { mode?: FormMode }) {
   const [draft, setDraft] = useState<ContactDraft>({ email: "", message: "" });

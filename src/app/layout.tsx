@@ -1,3 +1,4 @@
+import { sharedStyles } from "@/components/ui/shared-styles";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { site } from "@/lib/site";
@@ -38,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en-GB" data-theme="dark">
       <body className={raleway.variable}>
-        <a href="#main" className="skip-link">
+        <a href="#main" className={sharedStyles["skip-link"]}>
           Skip to content
         </a>
         {children}

@@ -14,7 +14,7 @@ import { useEnquirySubmission } from "@/hooks/use-enquiry-submission";
 import { FormFeedback } from "./form-feedback";
 import { EnquiryHoneypot, FormNotice } from "./form-notice";
 import type { BookingDraft, FormErrors, FormMode } from "@/types/forms";
-import styles from "./forms.module.css";
+import { styles } from "@/components/forms/form-styles";
 
 export function BookingForm({ mode = "preview" }: { mode?: FormMode }) {
   const { sessionType, revision, onSessionChange } = useCoachingSelection();
@@ -138,7 +138,7 @@ export function BookingForm({ mode = "preview" }: { mode?: FormMode }) {
             ))}
           </select>
           {visibleErrors.sessionType && (
-            <p id="session-type-error" className="form-error-summary">
+            <p id="session-type-error" className={"form-error-summary"}>
               {visibleErrors.sessionType}
             </p>
           )}

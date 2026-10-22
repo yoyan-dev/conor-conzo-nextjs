@@ -1,6 +1,6 @@
 import type { Testimonial } from "@/types/coaching";
 import { RatingStars } from "@/components/ui/rating-stars";
-import styles from "@/app/assets/css/sections/testimonials-section.module.css";
+import { styles } from "@/components/sections/testimonials/testimonials-styles";
 
 type TestimonialBoardProps = {
   reviews: readonly Testimonial[];

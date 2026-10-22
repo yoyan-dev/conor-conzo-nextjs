@@ -1,3 +1,4 @@
+import { sharedStyles } from "@/components/ui/shared-styles";
 import type { ReactNode } from "react";
 type SectionHeadingProps = {
   eyebrow: string;
@@ -12,8 +13,8 @@ export function SectionHeading({
   className = "",
 }: SectionHeadingProps) {
   return (
-    <div className={`section-heading ${className}`}>
-      <p className="eyebrow">{eyebrow}</p>
+    <div className={`${sharedStyles["section-heading"]} ${className}`}>
+      <p className={sharedStyles["eyebrow"]}>{eyebrow}</p>
       <h2 id={id}>{children}</h2>
     </div>
   );

@@ -13,8 +13,8 @@ import {
   type ReactNode,
 } from "react";
 import type { GalleryPhoto } from "@/content/gallery";
-import galleryStyles from "@/app/assets/css/sections/gallery-section.module.css";
-import styles from "@/app/assets/css/sections/gallery-lightbox.module.css";
+import { styles as galleryStyles } from "@/components/sections/gallery/gallery-styles";
+import { styles } from "@/components/sections/gallery/gallery-lightbox-styles";
 
 const OpenGalleryContext = createContext<((index: number) => void) | null>(
   null,

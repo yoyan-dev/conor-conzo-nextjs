@@ -1,6 +1,6 @@
 import { coach } from "@/content/coach";
 import type { FormMode } from "@/types/forms";
-import styles from "./forms.module.css";
+import { styles } from "@/components/forms/form-styles";
 
 export function FormNotice({ mode, id }: { mode: FormMode; id: string }) {
   return (

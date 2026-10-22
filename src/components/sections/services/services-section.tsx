@@ -1,21 +1,23 @@
+import { sharedStyles } from "@/components/ui/shared-styles";
 import { services } from "@/content/coach";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { ServiceAction } from "@/components/coaching/service-action";
-import styles from "@/app/assets/css/sections/services-section.module.css";
+import { styles } from "@/components/sections/services/services-styles";
 export function ServicesSection() {
   return (
     <section
       id="about"
       tabIndex={-1}
       aria-labelledby="services-heading"
-      className="section"
+      className={sharedStyles["section"]}
     >
-      <div className="page-container">
+      <div className={sharedStyles["page-container"]}>
         <div className={styles.intro}>
           <SectionHeading eyebrow="What I do" id="services-heading">
             Coaching based on a simple fact:
             <br />
-            <span className="muted-heading">we’re all human.</span>
+            <span className={sharedStyles["muted-heading"]}>
+              we’re all human.
+            </span>
           </SectionHeading>
           <p>
             I’m Coach Conzo - Sixteen (16) years in, countless clients helped,

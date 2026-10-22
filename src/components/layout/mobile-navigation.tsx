@@ -1,4 +1,5 @@
 "use client";
+import { layoutStyles } from "@/components/layout/layout-styles";
 import { Button } from "@heroui/react/button";
 import { navigationItems } from "@/content/navigation";
 import { useMobileNavigation } from "@/hooks/use-mobile-navigation";
@@ -8,18 +9,22 @@ export function MobileNavigation() {
   const { isOpen, buttonRef, navigationRef, handleNavigate, handleToggle } =
     useMobileNavigation();
   return (
-    <div className="mobile-navigation">
+    <div className={layoutStyles["mobile-navigation"]}>
       <Button
         ref={buttonRef}
         variant="ghost"
         isIconOnly
-        className="menu-toggle"
+        className={layoutStyles["menu-toggle"]}
         aria-label={isOpen ? "Close navigation" : "Open navigation"}
         aria-expanded={isOpen}
         aria-controls="mobile-navigation"
         onPress={handleToggle}
       >
-        <span className="menu-lines" data-open={isOpen} aria-hidden="true">
+        <span
+          className={layoutStyles["menu-lines"]}
+          data-open={isOpen}
+          aria-hidden="true"
+        >
           <span />
           <span />
         </span>
@@ -28,7 +33,7 @@ export function MobileNavigation() {
         ref={navigationRef}
         id="mobile-navigation"
         aria-label="Mobile navigation"
-        className="mobile-menu"
+        className={layoutStyles["mobile-menu"]}
         hidden={!isOpen}
       >
         {navigationItems.map((item) => (

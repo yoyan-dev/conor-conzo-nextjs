@@ -1,5 +1,5 @@
 import { SectionHeading } from "@/components/ui/section-heading";
-import styles from "@/app/assets/css/sections/booking-section.module.css";
+import { styles } from "@/components/sections/booking/booking-styles";
 export function BookingIntroduction() {
   return (
     <div className={styles.introduction}>
@@ -32,9 +32,9 @@ export function BookingIntroduction() {
       <div className={styles.coachNote}>
         <span>Real talk from Conzo</span>
         <p>
-          &quot;I&apos;ve been doing this for nearly 10 years. I&apos;ve seen every level of
-          fitness, every lifestyle, every excuse — and I mean that with full
-          love. The call is just a chat. Come as you are.&quot;
+          &quot;I&apos;ve been doing this for nearly 10 years. I&apos;ve seen
+          every level of fitness, every lifestyle, every excuse — and I mean
+          that with full love. The call is just a chat. Come as you are.&quot;
         </p>
       </div>
     </div>

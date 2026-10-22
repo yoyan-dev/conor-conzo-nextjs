@@ -21,7 +21,7 @@ export function FormFeedback({
   }, [isReady]);
   return (
     <>
-      <div role="alert" className="form-error-summary">
+      <div role="alert" className={"form-error-summary"}>
         {hasErrors ? (
           "Check the highlighted fields and try again."
         ) : status === "error" ? (
@@ -37,7 +37,7 @@ export function FormFeedback({
         tabIndex={-1}
         role="status"
         aria-live="polite"
-        className="form-feedback"
+        className={"form-feedback"}
         hidden={!isReady}
       >
         <strong>

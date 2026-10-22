@@ -1,7 +1,13 @@
 "use client";
+import { sharedStyles } from "@/components/ui/shared-styles";
 import { Link } from "@heroui/react/link";
 import type { ReactNode } from "react";
 import { focusSection } from "@/lib/anchor-navigation";
+const actionVariants = {
+  primary: sharedStyles["action-link--primary"],
+  secondary: sharedStyles["action-link--secondary"],
+  text: sharedStyles["action-link--text"],
+} as const;
 type ActionLinkProps = {
   href: string;
   children: ReactNode;
@@ -19,7 +25,7 @@ export function ActionLink({
   return (
     <Link
       href={href}
-      className={`action-link action-link--${variant} ${className}`}
+      className={`${sharedStyles["action-link"]} ${actionVariants[variant]} ${className}`}
       onPress={() => {
         onPress?.();
         if (href.startsWith("#")) focusSection(href.slice(1));

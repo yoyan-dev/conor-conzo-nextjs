@@ -1,17 +1,18 @@
+import { sharedStyles } from "@/components/ui/shared-styles";
 import { faqs } from "@/content/coach";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { FaqAccordion } from "@/components/ui/faq-accordion";
 import { ActionLink } from "@/components/ui/action-link";
-import styles from "@/app/assets/css/sections/faq-section.module.css";
+import { styles } from "@/components/sections/faq/faq-styles";
 export function FaqSection() {
   return (
     <section
       id="faq"
       tabIndex={-1}
       aria-labelledby="faq-heading"
-      className="section"
+      className={sharedStyles["section"]}
     >
-      <div className={`page-container ${styles.layout}`}>
+      <div className={`${sharedStyles["page-container"]} ${styles.layout}`}>
         <div>
           <SectionHeading eyebrow="FAQ" id="faq-heading">
             Good question.

@@ -1,4 +1,5 @@
 "use client";
+import { sharedStyles } from "@/components/ui/shared-styles";
 import { ActionLink } from "@/components/ui/action-link";
 import { useCoachingSelection } from "@/components/coaching/coaching-selection";
 import type { ServiceId } from "@/types/coaching";
@@ -15,7 +16,7 @@ export function ServiceAction({
     <ActionLink
       href={isCollaboration ? "#contact" : "#book"}
       variant="text"
-      className="service-action"
+      className={sharedStyles["service-action"]}
       onPress={() => {
         if (!isCollaboration) onSessionChange(serviceId);
       }}

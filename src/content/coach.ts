@@ -130,7 +130,7 @@ export const testimonials: Testimonial[] = [
       "Coach Conzo is that friend that would promise you soft serve and pizza, ONLY if you finish your workouts and do what’s best for you! In all seriousness, I’ve never been more motivated to workout and to learn more about what works out for my body, and I have seen results in the past month with him that I haven’t seen in my last five years at the gym. He’s always ready to answer any question and doesn’t hesitate to demonstrate any form to ensure you get maximum benefit of the training. He’s a pretty good fella too. 10/10 would recommend to y’all",
   },
   {
-    name: "Client 03",
+    name: "Claudia",
     rating: 5,
     type: "Online + in-person",
     quote:

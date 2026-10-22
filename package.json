@@ -13,7 +13,8 @@
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",
     "test:unit": "node --conditions=react-server --import tsx --test tests/unit/*.test.ts",
-    "test:e2e:live": "playwright test --config playwright.live.config.ts"
+    "test:e2e:live": "playwright test --config playwright.live.config.ts",
+    "test:visual": "playwright test --config playwright.visual.config.ts"
   },
   "dependencies": {
     "@heroui/react": "3.2.6",
