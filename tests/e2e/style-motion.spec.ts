@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 test("hero animation timings and keyframes survive the utility migration", async ({
   page,

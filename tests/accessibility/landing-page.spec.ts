@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 import AxeBuilder from "@axe-core/playwright";
 
 for (const width of [390, 1440]) {
@@ -23,8 +23,8 @@ for (const width of [390, 1440]) {
       })
       .click();
     await page
-      .getByRole("form", { name: "Booking preview", exact: true })
-      .getByRole("button", { name: "Preview request", exact: true })
+      .getByRole("form", { name: "Coaching enquiry", exact: true })
+      .getByRole("button", { name: "Send enquiry", exact: true })
       .click();
     const interactive = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])

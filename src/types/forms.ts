@@ -1,6 +1,5 @@
 import type { SessionType } from "@/types/coaching";
 
-export type FormMode = "preview" | "live";
 export type BookingDraft = { name: string; email: string; message: string };
 export type ContactDraft = { email: string; message: string };
 export type FormErrors<T> = Partial<Record<keyof T, string>>;

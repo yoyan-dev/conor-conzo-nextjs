@@ -15,21 +15,20 @@ Open http://localhost:3000. For a production build, run `npm run build` and `npm
 
 ## Contact and coaching enquiries
 
-Both forms support local preview and optional Gmail delivery. Preview is the default: validation and feedback happen locally, with no submission request. Vercel preview deployments always use preview mode, even if live mode was configured.
+Both forms use one submission flow: they validate locally, then submit to the email enquiry endpoint. They show success only after the server accepts delivery, and preserve entered details when delivery fails.
 
-Copy `.env.example` to `.env.local`. Only three settings are added for email:
+Copy `.env.example` to `.env.local`. Email uses two server-only settings:
 
 ```dotenv
-FORM_MODE=preview
 SMTP_USER=
 SMTP_APP_PASSWORD=
 ```
 
-To enable real enquiries, set `FORM_MODE=live`, fill in the authenticating Gmail account and a newly generated Google App Password, and restart the server. Google App Passwords require 2-Step Verification. Keep credentials in local or hosting secrets; never commit them or prefix them with NEXT_PUBLIC_. Do not reuse credentials from another repository.
+Configure the authenticating Gmail account and a newly generated Google App Password, then restart the server. Google App Passwords require 2-Step Verification. Keep credentials in local or hosting secrets; never commit them or prefix them with NEXT_PUBLIC_. Do not reuse credentials from another repository.
 
-Gmail's SMTP host and port are fixed in code: smtp.gmail.com:587 with STARTTLS required. Notifications go to `coach.email` in `src/content/coach.ts`, currently coachconzo@gmail.com. The authenticated account is the sender; the visitor's validated email is Reply-To. Each submission sends one plain-text coach notification. It sends no visitor autoresponder, calendar invitation, booking confirmation, or payment request.
+Gmail's SMTP host and port are fixed in code: smtp.gmail.com:587 with STARTTLS required. Notifications go to `coach.email` in `src/content/coach.ts`, as configured in that content file. The authenticated account is the sender; the visitor's validated email is Reply-To. Each submission sends one plain-text coach notification. It sends no visitor autoresponder, calendar invitation, booking confirmation, or payment request.
 
-The existing `SITE_URL` must be the confirmed HTTPS origin when running production live mode. Requests from other origins are rejected. Local development can use its own request origin without SITE_URL. The form mode is resolved on the server per request, so restarting with a new mode does not require rebuilding. Static coaching content stays in Server Components.
+The existing `SITE_URL` must be the confirmed HTTPS origin in production. Requests from other origins are rejected. Local development can use its own request origin without SITE_URL. Static coaching content stays in Server Components.
 
 Messages are emailed to the coach so they can respond. The app does not store enquiries in a database. Visitors are asked to avoid sensitive health information. SMTP acceptance does not guarantee final inbox delivery; failed or uncertain submissions preserve entered details and provide the email fallback. There are no automatic retries.
 
@@ -37,9 +36,9 @@ Messages are emailed to the coach so they can respond. The app does not store en
 
 `POST /api/enquiries` accepts contact or coaching enquiries. The Node.js Route Handler independently validates types, lengths, allowed session IDs, and fixed payload fields. It rejects arbitrary recipient/header overrides, filled honeypots, non-JSON input, foreign origins, and request bodies over 16 KiB.
 
-A small process-wide limiter allows at most 10 same-origin JSON attempts per minute across both forms. It does not persist across server restarts or coordinate between instances. Before public live deployment, configure a shared rate limit in the hosting firewall or gateway. Origin checks and honeypots alone do not stop automated clients. No additional service or environment variables are introduced by this implementation.
+A small process-wide limiter allows at most 10 same-origin JSON attempts per minute across both forms. It does not persist across server restarts or coordinate between instances. Before public deployment, configure a shared rate limit in the hosting firewall or gateway. Origin checks and honeypots alone do not stop automated clients. No additional service or environment variables are introduced by this implementation.
 
-Live mode without complete SMTP configuration or a production origin fails with explicit error feedback; it never reports preview success. Other hosting providers must explicitly configure preview deployments with FORM_MODE=preview and omit SMTP secrets. Do not deploy on an Edge-only or static-export host; Gmail SMTP requires outbound TCP from a Node.js runtime.
+Missing SMTP configuration or a production origin fails with explicit error feedback. Configure SMTP secrets only in environments intended to send email; there is no separate form mode. Do not deploy on an Edge-only or static-export host; Gmail SMTP requires outbound TCP from a Node.js runtime.
 
 ## Validation
 
@@ -49,10 +48,10 @@ npm run typecheck
 npm run build
 npm run test:unit
 npm run test:e2e
-npm run test:e2e:live
+npm run test:visual
 ```
 
-Unit tests mock SMTP, including rejection and missing configuration. Browser tests cover preview conversion paths, live submitting/success/error states, session selection, mobile layout, and accessibility. Live browser tests intercept the API and start their server with empty SMTP credentials; no test sends real email. Browser tests require the production build and Chrome on Windows (Chromium elsewhere).
+Unit tests mock SMTP, including rejection and missing configuration. Browser tests cover submitting/success/error states, session selection, mobile layout, and accessibility. All browser suites intercept form submissions and start their server with empty SMTP credentials; endpoint tests use these credential-free servers. No test sends real email. Browser tests require the production build and Chrome on Windows (Chromium elsewhere).
 
 For a real delivery check, configure your own credentials locally, submit once with controlled content, inspect the received coach notification, and verify Reply addresses the visitor. Automated checks do not establish actual Gmail delivery.
 
@@ -67,9 +66,9 @@ AGENTS.md references PRODUCT.md, DESIGN.md, docs/UI-DEVELOPMENT-PLAN.md, docs/PR
 ## Project map
 
 - `src/components/forms`: contact and coaching form UI, notices, and accessible feedback.
-- `src/hooks/use-enquiry-submission.ts`: local previews and live submission states.
+- `src/hooks/use-enquiry-submission.ts`: submission state, draft preservation, and errors.
 - `src/app/api/enquiries/route.ts`: Node.js submission endpoint.
-- `src/lib/server`: private form-mode, request handling, and Gmail delivery.
+- `src/lib/server`: private request handling and Gmail delivery.
 - `src/lib/enquiry-validation.ts`: strict payload validation using existing field rules.
 - `src/content/coach.ts` and `src/content/sessions.ts`: approved coach details and session choices.
 - `docs/NODEMAILER-IMPLEMENTATION-PLAN.md`: simplified implementation record and remaining activation work.

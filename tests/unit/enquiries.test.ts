@@ -3,7 +3,6 @@ import { afterEach, mock, test } from "node:test";
 import nodemailer from "nodemailer";
 import type Mail from "nodemailer/lib/mailer";
 import { createEnquiryHandler } from "../../src/lib/server/enquiry-handler";
-import { getFormMode } from "../../src/lib/server/form-mode";
 import { sendEnquiry } from "../../src/lib/server/mailer";
 import { coach } from "../../src/content/coach";
 import type { Enquiry } from "../../src/types/forms";
@@ -33,26 +32,21 @@ function request(input: unknown, headers: Record<string, string> = {}) {
 }
 function handler(send: (enquiry: Enquiry) => Promise<void> = async () => {}) {
   return createEnquiryHandler({
-    getMode: () => "live",
     getOrigin: () => origin,
     takeSlot: () => true,
     send,
   });
 }
 
-test("preview and missing production origin never invoke delivery", async () => {
+test("missing production origin never invokes delivery", async () => {
   let calls = 0;
-  const send = async () => {
-    calls++;
-  };
-  const preview = createEnquiryHandler({ getMode: () => "preview", send });
-  assert.equal((await preview(request(contact))).status, 503);
   const unavailable = createEnquiryHandler({
-    getMode: () => "live",
     getOrigin: () => {
       throw new Error("Missing origin");
     },
-    send,
+    send: async () => {
+      calls++;
+    },
   });
   assert.equal((await unavailable(request(contact))).status, 503);
   assert.equal(calls, 0);
@@ -144,7 +138,6 @@ test("rejects foreign and missing Origin and unsupported content type", async ()
 
 test("rate limiting returns Retry-After without sending", async () => {
   const post = createEnquiryHandler({
-    getMode: () => "live",
     getOrigin: () => origin,
     takeSlot: () => false,
     send: async () => {
@@ -168,7 +161,6 @@ test("SMTP failures return safe feedback and never expose the underlying error",
 
 test("the default limiter bounds attempts across both form kinds in this process", async () => {
   const post = createEnquiryHandler({
-    getMode: () => "live",
     getOrigin: () => origin,
     send: async () => {},
   });
@@ -179,25 +171,6 @@ test("the default limiter bounds attempts across both form kinds in this process
     );
   }
   assert.equal((await post(request(contact))).status, 429);
-});
-
-test("mode is opt-in and Vercel previews cannot send even with live configured", () => {
-  const originalMode = process.env.FORM_MODE;
-  const originalVercel = process.env.VERCEL_ENV;
-  try {
-    delete process.env.FORM_MODE;
-    delete process.env.VERCEL_ENV;
-    assert.equal(getFormMode(), "preview");
-    process.env.FORM_MODE = "live";
-    assert.equal(getFormMode(), "live");
-    process.env.VERCEL_ENV = "preview";
-    assert.equal(getFormMode(), "preview");
-  } finally {
-    if (originalMode === undefined) delete process.env.FORM_MODE;
-    else process.env.FORM_MODE = originalMode;
-    if (originalVercel === undefined) delete process.env.VERCEL_ENV;
-    else process.env.VERCEL_ENV = originalVercel;
-  }
 });
 
 test("mailer uses fixed Gmail settings, coach recipient, and visitor Reply-To", async () => {

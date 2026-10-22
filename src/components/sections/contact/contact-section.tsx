@@ -1,11 +1,10 @@
 import { sharedStyles } from "@/components/ui/shared-styles";
-import type { FormMode } from "@/types/forms";
 import { coach } from "@/content/coach";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SocialIcon } from "@/components/ui/social-icon";
 import { ContactForm } from "@/components/forms/contact-form";
 import { styles } from "@/components/sections/contact/contact-styles";
-export function ContactSection({ mode }: { mode: FormMode }) {
+export function ContactSection() {
   return (
     <section
       id="contact"
@@ -56,7 +55,7 @@ export function ContactSection({ mode }: { mode: FormMode }) {
             <p className={styles.formIntro}>
               Questions, goals, or a collaboration idea? Start here.
             </p>
-            <ContactForm mode={mode} />
+            <ContactForm />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 import AxeBuilder from "@axe-core/playwright";
 
 test("coaching sends the selected enquiry once, waits for acceptance, and never confirms a booking", async ({
@@ -89,7 +89,7 @@ test("contact failure preserves the draft and a deliberate retry can succeed", a
     .analyze();
   expect(audit.violations).toEqual([]);
   await form.screenshot({
-    path: "test-results/live-contact-mobile.png",
+    path: "test-results/contact-mobile.png",
   });
 });
 
@@ -169,7 +169,7 @@ test("an orientation change during delivery does not mark the new selection as s
   await expect(form.getByRole("status")).toBeHidden();
 });
 
-test("live endpoint fails safely without SMTP credentials", async ({
+test("enquiry endpoint fails safely without SMTP credentials", async ({
   request,
 }) => {
   const response = await request.post("/api/enquiries", {

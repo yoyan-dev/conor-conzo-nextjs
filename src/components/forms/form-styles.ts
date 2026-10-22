@@ -41,8 +41,8 @@ export const styles = {
     "[&_select]:[cursor:pointer]",
   ].join(" "),
   optional: "form-optional normal-case tracking-[0] font-[450]",
-  previewNotice: [
-    "form-previewNotice [font-size:0.8125rem] [color:var(--text-muted)] leading-[1.6] m-0 p-[0.75rem_1rem]",
+  notice: [
+    "form-notice [font-size:0.8125rem] [color:var(--text-muted)] leading-[1.6] m-0 p-[0.75rem_1rem]",
     "[border-left:2px_solid_var(--brand-blue)] [background:var(--surface)]",
   ].join(" "),
   submit: [

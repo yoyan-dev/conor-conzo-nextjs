@@ -13,10 +13,10 @@ import { validateBookingDraft } from "@/lib/form-validation";
 import { useEnquirySubmission } from "@/hooks/use-enquiry-submission";
 import { FormFeedback } from "./form-feedback";
 import { EnquiryHoneypot, FormNotice } from "./form-notice";
-import type { BookingDraft, FormErrors, FormMode } from "@/types/forms";
+import type { BookingDraft, FormErrors } from "@/types/forms";
 import { styles } from "@/components/forms/form-styles";
 
-export function BookingForm({ mode = "preview" }: { mode?: FormMode }) {
+export function BookingForm() {
   const { sessionType, revision, onSessionChange } = useCoachingSelection();
   const [draft, setDraft] = useState<BookingDraft>({
     name: "",
@@ -25,7 +25,6 @@ export function BookingForm({ mode = "preview" }: { mode?: FormMode }) {
   });
   const [errors, setErrors] = useState<FormErrors<BookingDraft>>({});
   const submission = useEnquirySubmission(
-    mode,
     JSON.stringify({ ...draft, revision }),
   );
   const visibleErrors = { ...errors, ...submission.fieldErrors };
@@ -61,20 +60,16 @@ export function BookingForm({ mode = "preview" }: { mode?: FormMode }) {
   }
   return (
     <div className={styles.booking}>
-      <h3 className={styles.heading}>
-        {mode === "preview"
-          ? "Schedule your session"
-          : "Enquire about a session"}
-      </h3>
+      <h3 className={styles.heading}>Enquire about a session</h3>
       <Form
         validationBehavior="aria"
         onSubmit={handleSubmit}
         className={styles.form}
-        aria-label={mode === "preview" ? "Booking preview" : "Coaching enquiry"}
+        aria-label="Coaching enquiry"
         aria-describedby="booking-form-notice"
         aria-busy={submission.isSubmitting}
       >
-        <FormNotice mode={mode} id="booking-form-notice" />
+        <FormNotice id="booking-form-notice" />
         <EnquiryHoneypot id="booking-website" />
         <TextField
           name="name"
@@ -169,11 +164,7 @@ export function BookingForm({ mode = "preview" }: { mode?: FormMode }) {
           className={styles.submit}
           isDisabled={!submission.isHydrated || submission.isSubmitting}
         >
-          {submission.isSubmitting
-            ? "Sending…"
-            : mode === "preview"
-              ? "Preview request"
-              : "Send enquiry"}
+          {submission.isSubmitting ? "Sending…" : "Send enquiry"}
         </Button>
         <FormFeedback
           status={submission.status}

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 test("orientation keyboard selection carries into booking without resetting edited fields", async ({
   page,
@@ -22,7 +22,10 @@ test("orientation keyboard selection carries into booking without resetting edit
   await page
     .getByRole("link", { name: "Book an orientation", exact: true })
     .click();
-  const form = page.getByRole("form", { name: "Booking preview", exact: true });
+  const form = page.getByRole("form", {
+    name: "Coaching enquiry",
+    exact: true,
+  });
   await form.getByRole("textbox", { name: /your name/i }).fill("UI Check");
   await page.getByText("Advanced", { exact: true }).click();
   await expect(page.locator("#booking-session")).toHaveValue("advanced");
@@ -56,7 +59,7 @@ for (const source of ["header", "hero", "mobile-menu"] as const) {
     await page.getByText("Intermediate", { exact: true }).click();
     await expect(page.locator("#booking-session")).toHaveValue("intermediate");
     const form = page.getByRole("form", {
-      name: "Booking preview",
+      name: "Coaching enquiry",
       exact: true,
     });
     await form.getByRole("textbox", { name: /your name/i }).fill("UI Check");
@@ -67,7 +70,7 @@ for (const source of ["header", "hero", "mobile-menu"] as const) {
       .getByRole("textbox", { name: /anything to share/i })
       .fill("Build confidence in the gym.");
     await form
-      .getByRole("button", { name: "Preview request", exact: true })
+      .getByRole("button", { name: "Send enquiry", exact: true })
       .click();
     await expect(form.getByRole("status")).toBeVisible();
 
@@ -108,7 +111,7 @@ for (const source of ["header", "hero", "mobile-menu"] as const) {
   });
 }
 
-test("collaborations lead to the contact preview", async ({ page }) => {
+test("collaborations lead to the contact form", async ({ page }) => {
   await page.goto("/");
   await page
     .getByRole("link", { name: "Discuss a collaboration", exact: true })

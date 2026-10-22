@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "../fixtures";
 import { mkdirSync, writeFileSync } from "node:fs";
 
 async function ready(page: Page) {
@@ -106,11 +106,11 @@ for (const width of [390, 1440]) {
     await page.locator("#faq").scrollIntoViewIfNeeded();
     await capture(page, `faq-expanded-${width}`);
     const booking = page.getByRole("form", {
-      name: "Booking preview",
+      name: "Coaching enquiry",
       exact: true,
     });
     await booking
-      .getByRole("button", { name: "Preview request", exact: true })
+      .getByRole("button", { name: "Send enquiry", exact: true })
       .click();
     await capture(page, `booking-invalid-${width}`);
     await booking
@@ -120,15 +120,15 @@ for (const width of [390, 1440]) {
       .getByRole("textbox", { name: /email address/i })
       .fill("visual@example.test");
     await booking
-      .getByRole("button", { name: "Preview request", exact: true })
+      .getByRole("button", { name: "Send enquiry", exact: true })
       .click();
-    await capture(page, `booking-preview-${width}`);
+    await capture(page, `booking-success-${width}`);
     const contact = page.getByRole("form", {
-      name: "Contact preview",
+      name: "Contact enquiry",
       exact: true,
     });
     await contact
-      .getByRole("button", { name: "Preview message", exact: true })
+      .getByRole("button", { name: "Send message", exact: true })
       .click();
     await capture(page, `contact-invalid-${width}`);
     await contact
@@ -136,11 +136,11 @@ for (const width of [390, 1440]) {
       .fill("visual@example.test");
     await contact
       .getByRole("textbox", { name: /your message/i })
-      .fill("A local visual preview.");
+      .fill("A visual enquiry check.");
     await contact
-      .getByRole("button", { name: "Preview message", exact: true })
+      .getByRole("button", { name: "Send message", exact: true })
       .click();
-    await capture(page, `contact-preview-${width}`);
+    await capture(page, `contact-success-${width}`);
     await page
       .locator("#gallery")
       .getByRole("button", { name: /^View photo/ })

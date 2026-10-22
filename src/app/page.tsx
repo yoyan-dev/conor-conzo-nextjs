@@ -1,5 +1,3 @@
-import { connection } from "next/server";
-import { getFormMode } from "@/lib/server/form-mode";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { HeroSection } from "@/components/sections/hero/hero-section";
@@ -14,10 +12,7 @@ import { GallerySection } from "@/components/sections/gallery/gallery-section";
 import { ContactSection } from "@/components/sections/contact/contact-section";
 import { SectionNavigation } from "@/components/layout/section-navigation";
 import { ScrollReveals } from "@/components/ui/scroll-reveals";
-export default async function Home() {
-  // Resolve the public mode at request time; SMTP credentials stay server-only.
-  await connection();
-  const mode = getFormMode();
+export default function Home() {
   return (
     <CoachingFlow>
       <SiteHeader />
@@ -27,11 +22,11 @@ export default async function Home() {
         <SectionNavigation />
         <ServicesSection />
         <OrientationsSection />
-        <BookingSection introduction={<BookingIntroduction />} mode={mode} />
+        <BookingSection introduction={<BookingIntroduction />} />
         <TestimonialsSection />
         <FaqSection />
         <GallerySection />
-        <ContactSection mode={mode} />
+        <ContactSection />
       </main>
       <SiteFooter />
     </CoachingFlow>

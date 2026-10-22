@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 test("desktop navigation targets real sections and sourced reviews", async ({
   page,

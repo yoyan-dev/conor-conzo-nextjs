@@ -6,15 +6,13 @@ import type {
   Enquiry,
   EnquiryFieldErrors,
   EnquiryResponse,
-  FormMode,
 } from "@/types/forms";
 
 const subscribe = () => () => {};
 const getHydrated = () => true;
 const getServerHydrated = () => false;
 
-export type SubmissionStatus =
-  "idle" | "submitting" | "preview" | "success" | "error";
+export type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 type Result = {
   key: string;
   status: SubmissionStatus;
@@ -22,7 +20,7 @@ type Result = {
   fieldErrors?: EnquiryFieldErrors;
 };
 
-export function useEnquirySubmission(mode: FormMode, draftKey: string) {
+export function useEnquirySubmission(draftKey: string) {
   const isHydrated = useSyncExternalStore(
     subscribe,
     getHydrated,
@@ -43,10 +41,6 @@ export function useEnquirySubmission(mode: FormMode, draftKey: string) {
   async function submit(enquiry: Enquiry, form: HTMLFormElement) {
     if (pending.current) return;
     const key = draftKey;
-    if (mode === "preview") {
-      setResult({ key, status: "preview" });
-      return;
-    }
     pending.current = true;
     const requestGeneration = generation.current;
     setResult({ key, status: "submitting" });

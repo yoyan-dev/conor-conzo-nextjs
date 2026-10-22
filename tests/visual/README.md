@@ -2,7 +2,7 @@
 
 Run `npm run build`, then `npm run test:visual`.
 
-The 74 reference screenshots were captured from the original CSS implementation with the current content, including the pre-existing Claudia testimonial edit. They cover the homepage, gallery, not-found page, individual sections, responsive breakpoint boundaries, form feedback, navigation, keyboard focus, hover states, and the lightbox.
+The 74 reference screenshots cover the current Tailwind UI and its single email enquiry flow. Form responses are intercepted by shared browser fixtures so screenshots never send email. They cover the homepage, gallery, not-found page, individual sections, responsive breakpoint boundaries, enquiry success/error feedback, navigation, keyboard focus, hover states, and the lightbox.
 
 Comparisons allow zero changed pixels. The configuration uses the project's Chrome/Chromium setup with consistent software rendering, reduced motion, loaded fonts/images, and hidden text carets. Use the same browser version and operating system when comparing these reference images. Normal animation timing and reduced-motion changes are covered separately by the regular browser tests.
 

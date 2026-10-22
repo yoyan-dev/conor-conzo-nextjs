@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 declare global {
   interface Window {
@@ -125,7 +125,7 @@ test("direct links and keyboard focus show their section immediately", async ({
 
   await page.goto("/");
   await page
-    .getByRole("form", { name: "Booking preview" })
+    .getByRole("form", { name: "Coaching enquiry" })
     .getByRole("textbox", { name: /your name/i })
     .focus();
   expect(
@@ -138,12 +138,12 @@ test("direct links and keyboard focus show their section immediately", async ({
       ),
   ).toBe(false);
   await page
-    .getByRole("form", { name: "Booking preview" })
+    .getByRole("form", { name: "Coaching enquiry" })
     .getByRole("textbox", { name: /your name/i })
     .fill("Preserved draft");
   await expect(
     page
-      .getByRole("form", { name: "Booking preview" })
+      .getByRole("form", { name: "Coaching enquiry" })
       .getByRole("textbox", { name: /your name/i }),
   ).toHaveValue("Preserved draft");
 });

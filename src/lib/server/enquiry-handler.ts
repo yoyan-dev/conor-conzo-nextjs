@@ -1,9 +1,8 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
 import { parseEnquiry } from "@/lib/enquiry-validation";
-import { getFormMode } from "@/lib/server/form-mode";
 import { sendEnquiry } from "@/lib/server/mailer";
-import type { Enquiry, EnquiryResponse, FormMode } from "@/types/forms";
+import type { Enquiry, EnquiryResponse } from "@/types/forms";
 
 const MAX_BODY_BYTES = 16 * 1024;
 const WINDOW_MS = 60_000;
@@ -71,7 +70,6 @@ function reply(body: EnquiryResponse, status: number, retryAfter?: string) {
 }
 
 type Dependencies = {
-  getMode: () => FormMode;
   getOrigin: (request: Request) => string;
   send: (enquiry: Enquiry) => Promise<void>;
   takeSlot: () => boolean;
@@ -79,22 +77,12 @@ type Dependencies = {
 
 export function createEnquiryHandler(overrides: Partial<Dependencies> = {}) {
   const dependencies: Dependencies = {
-    getMode: getFormMode,
     getOrigin: expectedOrigin,
     send: sendEnquiry,
     takeSlot,
     ...overrides,
   };
   return async function handleEnquiry(request: Request): Promise<Response> {
-    if (dependencies.getMode() !== "live") {
-      return reply(
-        {
-          ok: false,
-          message: "This form is in preview mode. No message was sent.",
-        },
-        503,
-      );
-    }
     let origin: string;
     try {
       origin = dependencies.getOrigin(request);

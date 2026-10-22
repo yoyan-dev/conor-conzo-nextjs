@@ -15,7 +15,7 @@ export function FormFeedback({
   kind: "contact" | "coaching";
 }) {
   const feedbackRef = useRef<HTMLDivElement>(null);
-  const isReady = status === "preview" || status === "success";
+  const isReady = status === "success";
   useEffect(() => {
     if (isReady) feedbackRef.current?.focus();
   }, [isReady]);
@@ -41,18 +41,14 @@ export function FormFeedback({
         hidden={!isReady}
       >
         <strong>
-          {status === "preview"
-            ? "Preview ready."
-            : kind === "coaching"
-              ? "Your enquiry has been sent."
-              : "Your message has been sent."}
+          {kind === "coaching"
+            ? "Your enquiry has been sent."
+            : "Your message has been sent."}
         </strong>
         <p>
-          {status === "preview"
-            ? "No booking or message was sent. You can edit your details and preview again."
-            : kind === "coaching"
-              ? "Your session is not booked yet. Coach Conzo can follow up with you by email."
-              : "Coach Conzo can follow up with you by email."}
+          {kind === "coaching"
+            ? "Your session is not booked yet. Coach Conzo can follow up with you by email."
+            : "Coach Conzo can follow up with you by email."}
         </p>
       </div>
     </>

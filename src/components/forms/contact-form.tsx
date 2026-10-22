@@ -11,13 +11,13 @@ import { validateContactDraft } from "@/lib/form-validation";
 import { useEnquirySubmission } from "@/hooks/use-enquiry-submission";
 import { FormFeedback } from "./form-feedback";
 import { EnquiryHoneypot, FormNotice } from "./form-notice";
-import type { ContactDraft, FormErrors, FormMode } from "@/types/forms";
+import type { ContactDraft, FormErrors } from "@/types/forms";
 import { styles } from "@/components/forms/form-styles";
 
-export function ContactForm({ mode = "preview" }: { mode?: FormMode }) {
+export function ContactForm() {
   const [draft, setDraft] = useState<ContactDraft>({ email: "", message: "" });
   const [errors, setErrors] = useState<FormErrors<ContactDraft>>({});
-  const submission = useEnquirySubmission(mode, JSON.stringify(draft));
+  const submission = useEnquirySubmission(JSON.stringify(draft));
   const visibleErrors = { ...errors, ...submission.fieldErrors };
   function handleChange(field: keyof ContactDraft, value: string) {
     const next = { ...draft, [field]: value };
@@ -54,11 +54,11 @@ export function ContactForm({ mode = "preview" }: { mode?: FormMode }) {
       validationBehavior="aria"
       onSubmit={handleSubmit}
       className={styles.form}
-      aria-label={mode === "preview" ? "Contact preview" : "Contact enquiry"}
+      aria-label="Contact enquiry"
       aria-describedby="contact-form-notice"
       aria-busy={submission.isSubmitting}
     >
-      <FormNotice mode={mode} id="contact-form-notice" />
+      <FormNotice id="contact-form-notice" />
       <EnquiryHoneypot id="contact-website" />
       <TextField
         name="email"
@@ -103,11 +103,7 @@ export function ContactForm({ mode = "preview" }: { mode?: FormMode }) {
         variant="primary"
         isDisabled={!submission.isHydrated || submission.isSubmitting}
       >
-        {submission.isSubmitting
-          ? "Sending…"
-          : mode === "preview"
-            ? "Preview message"
-            : "Send message"}
+        {submission.isSubmitting ? "Sending…" : "Send message"}
       </Button>
       <FormFeedback
         status={submission.status}

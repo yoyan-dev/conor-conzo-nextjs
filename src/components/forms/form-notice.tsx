@@ -1,17 +1,15 @@
 import { coach } from "@/content/coach";
-import type { FormMode } from "@/types/forms";
 import { styles } from "@/components/forms/form-styles";
 
-export function FormNotice({ mode, id }: { mode: FormMode; id: string }) {
+export function FormNotice({ id }: { id: string }) {
   return (
     <>
-      <p id={id} className={styles.previewNotice}>
-        {mode === "preview"
-          ? "This is a local preview. No booking or message will be sent."
-          : "Your details will be emailed to Coach Conzo to respond to your enquiry. Please avoid sharing sensitive health information."}
+      <p id={id} className={styles.notice}>
+        Your details will be emailed to Coach Conzo to respond to your enquiry.
+        Please avoid sharing sensitive health information.
       </p>
       <noscript>
-        <p className={styles.previewNotice}>
+        <p className={styles.notice}>
           To send an enquiry without JavaScript,{" "}
           <a href={`mailto:${coach.email}`}>email Coach Conzo</a>.
         </p>
