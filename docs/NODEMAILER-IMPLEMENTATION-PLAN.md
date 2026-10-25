@@ -17,11 +17,7 @@ Gmail SMTP host (smtp.gmail.com), port (587), and STARTTLS are fixed in server c
 
 ## Validation
 
-Run npm run lint, npm run typecheck, npm run build, npm run test:unit, npm run test:e2e, and npm run test:visual.
-
-Unit tests mock SMTP. Browser fixtures intercept form requests, including visual tests; test servers have empty SMTP credentials. Dedicated browser cases cover delayed acceptance, failures, retries, stale selections, and safe handling of missing configuration. No automated test sends real email.
-
-Two existing browser cases target service links already commented out in services-section.tsx. Removing form modes preserves that existing UI choice.
+Run npm run lint, npm run typecheck, and npm run build.
 
 ## Deferred work
 

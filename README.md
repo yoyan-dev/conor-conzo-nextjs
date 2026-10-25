@@ -46,14 +46,9 @@ Missing SMTP configuration or a production origin fails with explicit error feed
 npm run lint
 npm run typecheck
 npm run build
-npm run test:unit
-npm run test:e2e
-npm run test:visual
 ```
 
-Unit tests mock SMTP, including rejection and missing configuration. Browser tests cover submitting/success/error states, session selection, mobile layout, and accessibility. All browser suites intercept form submissions and start their server with empty SMTP credentials; endpoint tests use these credential-free servers. No test sends real email. Browser tests require the production build and Chrome on Windows (Chromium elsewhere).
-
-For a real delivery check, configure your own credentials locally, submit once with controlled content, inspect the received coach notification, and verify Reply addresses the visitor. Automated checks do not establish actual Gmail delivery.
+For a real delivery check, configure your own credentials locally, submit once with controlled content, inspect the received coach notification, and verify Reply addresses the visitor. Lint, typechecking, and builds do not establish actual Gmail delivery.
 
 ## Content and deployment
 
