@@ -7,6 +7,7 @@ import { coach } from "@/content/coach";
 import { sessionOptions } from "@/content/sessions";
 import { validateContactDraft } from "@/lib/form-validation";
 import type { Enquiry } from "@/types/forms";
+import { renderEnquiryEmail } from "@/lib/server/enquiry-email";
 
 let transport: Transporter<SMTPSentMessageInfo> | undefined;
 
@@ -49,16 +50,18 @@ export async function sendEnquiry(enquiry: Enquiry): Promise<void> {
     enquiry.kind === "coaching"
       ? "New coaching enquiry"
       : "New contact message",
+    "",
     ...(enquiry.kind === "coaching" ? [`Name: ${enquiry.name}`] : []),
     `Email: ${enquiry.email}`,
-    ...(session
-      ? [
-          `Interest: ${session.label}`,
-          "This is an enquiry; no session has been booked.",
-        ]
-      : []),
+    ...(session ? [`Interest: ${session.label}`] : []),
     "",
+    "Message:",
     enquiry.message || "(No additional message)",
+    "",
+    ...(session ? ["This is an enquiry; no session has been booked.", ""] : []),
+    "Reply to this email to respond directly to the customer.",
+    "",
+    `Sent from the ${coach.brand} website.`,
   ].join("\n");
 
   const info = await transport.sendMail({
@@ -67,6 +70,7 @@ export async function sendEnquiry(enquiry: Enquiry): Promise<void> {
     replyTo: { address: enquiry.email },
     subject,
     text,
+    html: renderEnquiryEmail(enquiry, session?.label),
   });
   if (
     !info.accepted.some(

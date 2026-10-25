@@ -216,7 +216,12 @@ test("mailer uses fixed Gmail settings, coach recipient, and visitor Reply-To", 
     assert.match(String(messages[0].subject), /Level Up & Lock In/);
     assert.ok(!String(messages[0].text).includes("120 min"));
     assert.match(String(messages[0].text), /no session has been booked/);
-    assert.equal(messages[0].html, undefined);
+    assert.match(String(messages[0].html), /New coaching enquiry/);
+    assert.match(String(messages[0].html), /Level Up &amp; Lock In/);
+    assert.match(String(messages[0].html), /no session has been booked/);
+    assert.match(String(messages[1].html), /New contact message/);
+    assert.match(String(messages[1].html), /Hello Coach\./);
+    assert.deepEqual(messages[1].replyTo, { address: contact.email });
     assert.equal((options as { host: string }).host, "smtp.gmail.com");
     assert.equal((options as { port: number }).port, 587);
     assert.equal((options as { requireTLS: boolean }).requireTLS, true);

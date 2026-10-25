@@ -12,7 +12,7 @@ Gmail SMTP host (smtp.gmail.com), port (587), and STARTTLS are fixed in server c
 
 1. Forms validate required fields locally before POST /api/enquiries.
 2. The server checks origin, JSON content type, a streamed 16 KiB body limit, a honeypot, allowed fields/session IDs, and a process-wide rate limit.
-3. A server-only Nodemailer transport sends one plain-text notification to the coach. Success requires recipient acceptance; failures never expose private SMTP details.
+3. A server-only Nodemailer transport sends one HTML notification with a plain-text fallback to the coach. The email uses a simple heading, labeled customer details, and a message separated by a subtle divider. The customer address is a standard mailto link, and Reply-To supports replying directly to the customer through the email client. Submitted HTML content is escaped. Success requires recipient acceptance; failures never expose private SMTP details.
 4. Forms announce pending, success, and error states. Drafts survive failure; changing details or coaching selection invalidates stale feedback. An enquiry never confirms a booking.
 
 ## Validation
