@@ -10,7 +10,6 @@ function optionalHttpsUrl(value: string | undefined, name: string) {
 const origin = optionalHttpsUrl(process.env.SITE_URL, "SITE_URL");
 export const site = {
   url: origin?.origin,
-  bookingUrl: optionalHttpsUrl(process.env.BOOKING_URL, "BOOKING_URL")?.href,
   indexable:
     Boolean(origin) &&
     process.env.ENABLE_INDEXING === "true" &&

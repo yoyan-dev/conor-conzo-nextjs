@@ -57,7 +57,7 @@ For a real delivery check, configure your own credentials locally, submit once w
 
 ## Content and deployment
 
-Indexing remains disabled by default and independent of email. Set the existing SITE_URL and ENABLE_INDEXING only for the final website. Vercel preview deployments remain noindex. Optional BOOKING_URL behavior is unchanged.
+Indexing remains disabled by default and independent of email. Set the existing SITE_URL and ENABLE_INDEXING only for the final website. Vercel preview deployments remain noindex.
 
 Advanced orientation duration remains unresolved. This integration preserves the existing testimonial content. Scheduling, payments, durable queues, delivery webhooks, analytics, and deployment are deferred.
 

@@ -38,9 +38,12 @@ export function useEnquirySubmission(draftKey: string) {
     if (!pending.current) setResult({ key: "", status: "idle" });
   }
 
-  async function submit(enquiry: Enquiry, form: HTMLFormElement) {
+  async function submit(
+    enquiry: Enquiry,
+    form: HTMLFormElement,
+    key = draftKey,
+  ) {
     if (pending.current) return;
-    const key = draftKey;
     pending.current = true;
     const requestGeneration = generation.current;
     setResult({ key, status: "submitting" });
@@ -50,7 +53,8 @@ export function useEnquirySubmission(draftKey: string) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...enquiry,
-          website: new FormData(form).get("website") ?? "",
+          // Keep the spam-check input separate from common autofill field names.
+          website: new FormData(form).get("enquiry-verification") ?? "",
         }),
       });
       const body: EnquiryResponse = await response.json();

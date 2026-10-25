@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { Button } from "@heroui/react/button";
 import { Form } from "@heroui/react/form";
 import { TextField } from "@heroui/react/textfield";
@@ -14,13 +14,23 @@ import { EnquiryHoneypot, FormNotice } from "./form-notice";
 import type { ContactDraft, FormErrors } from "@/types/forms";
 import { styles } from "@/components/forms/form-styles";
 
+function readContactDraft(form: HTMLFormElement): ContactDraft {
+  const values = new FormData(form);
+  return {
+    email: String(values.get("email") ?? ""),
+    message: String(values.get("message") ?? ""),
+  };
+}
+
 export function ContactForm() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [draft, setDraft] = useState<ContactDraft>({ email: "", message: "" });
   const [errors, setErrors] = useState<FormErrors<ContactDraft>>({});
   const submission = useEnquirySubmission(JSON.stringify(draft));
   const visibleErrors = { ...errors, ...submission.fieldErrors };
   function handleChange(field: keyof ContactDraft, value: string) {
-    const next = { ...draft, [field]: value };
+    const current = formRef.current ? readContactDraft(formRef.current) : draft;
+    const next = { ...current, [field]: value };
     setDraft(next);
     submission.reset();
     if (visibleErrors[field])
@@ -30,27 +40,38 @@ export function ContactForm() {
       }));
   }
   function handleBlur(field: keyof ContactDraft) {
+    const next = formRef.current ? readContactDraft(formRef.current) : draft;
+    setDraft(next);
+    if (JSON.stringify(next) !== JSON.stringify(draft)) submission.reset();
     setErrors((current) => ({
       ...current,
-      [field]: validateContactDraft(draft)[field],
+      [field]: validateContactDraft(next)[field],
     }));
   }
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const nextErrors = validateContactDraft(draft);
+    const form = event.currentTarget;
+    const submittedDraft = readContactDraft(form);
+    setDraft(submittedDraft);
+    const nextErrors = validateContactDraft(submittedDraft);
     setErrors(nextErrors);
     submission.reset();
     const first = Object.keys(nextErrors)[0];
-    const form = event.currentTarget;
     if (first) {
       const input = form.elements.namedItem(first);
       if (input instanceof HTMLElement) input.focus();
       return;
     }
-    await submission.submit({ kind: "contact", ...draft }, form);
+    await submission.submit(
+      { kind: "contact", ...submittedDraft },
+      form,
+      JSON.stringify(submittedDraft),
+    );
   }
   return (
     <Form
+      ref={formRef}
+      autoComplete="on"
       validationBehavior="aria"
       onSubmit={handleSubmit}
       className={styles.form}
@@ -59,7 +80,7 @@ export function ContactForm() {
       aria-busy={submission.isSubmitting}
     >
       {/* <FormNotice id="contact-form-notice" /> */}
-      <EnquiryHoneypot id="contact-website" />
+      <EnquiryHoneypot id="contact-enquiry-verification" />
       <TextField
         name="email"
         type="email"

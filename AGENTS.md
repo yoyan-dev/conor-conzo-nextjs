@@ -1,20 +1,31 @@
-# Repository guidance
+\# UNIVERSAL AI DEVELOPER PROTOCOL
 
-Read PRODUCT.md, DESIGN.md, and docs/UI-DEVELOPMENT-PLAN.md before UI implementation. docs/PROJECT-PLAN.md retains source research and deferred production work.
+\## 1. THE GOLDEN RULE: "PRESERVATION BY DEFAULT"
 
-- Primary visual reference: Figma Design iP7VbSVY0JB6hOmDLLPTb5, latest node 14:56 (FAQ region within the full desktop frame). Figma Make contributes interaction/completeness ideas in the main design visual language; the document governs copy.
-- Approved content comes from docs/source-copy.txt and src/content/coach.ts. Preserve the welcoming coaching voice.
-- Use the supplied public/images/hero/coach-conzo.png portrait. No invented reviews, statistics, credentials, addresses, or claims.
-- Advanced orientation duration is unresolved. Empty reviews must remain unpublished.
-- The existing homepage is a foundation preview. Do not claim it is the complete Figma implementation.
-- Stack: Next.js 16 App Router, React 19, HeroUI v3, Tailwind CSS v4, strict TypeScript.
-- Keep static content in Server Components and client boundaries narrow. Prefer HeroUI's supported component subpaths.
-- Indexing is opt-in through deployment configuration. Never invent the production domain.
-- The site offers an email enquiry link and Gmail SMTP enquiry forms with one submission flow. Keep SMTP credentials server-only, report delivery failures honestly, and never simulate booking confirmations. Tests must intercept or mock delivery and use empty SMTP credentials.
-- Validate with npm run lint, npm run typecheck, and npm run build. Run browser checks for visible changes and conversion paths.
-- Review performance, accessibility, semantic structure, and reduced-motion behavior with the design.
+\- \*\*No Silent Deletions:\*\* You are STRICTLY FORBIDDEN from removing logic, state variables, or styles (backgrounds, padding, transitions) unless they are explicitly identified as obsolete.
 
-- Contact and coaching forms submit to the enquiry endpoint without a mode switch. Configure SMTP credentials only where email delivery is intended. Scheduling, payment, visitor autoresponders, and deployment remain deferred.
-- Use kebab-case component filenames and PascalCase component exports. Group layout, sections, coaching interactions, forms, and shared UI by responsibility as specified in docs/UI-DEVELOPMENT-PLAN.md.
+\- \*\*Complexity Respect:\*\* If code looks "redundant" or "complex," assume it handles a specific edge case. You must ASK before simplifying it.
 
-- Group image assets by purpose under public/images/hero, public/images/orientations, and public/images/gallery. Keep unreferenced photos in public/images/unused. Assets intentionally displayed across different sections belong in public/images/shared; reference a single file rather than duplicating it. An import used only for deduplication does not change an asset's category.
+\- \*\*Verification Loop:\*\* Before providing final code, do a diff check. If a property or function is missing from the original, you have failed the task.
+
+\## 2. THE SKEPTIC'S CHECKPOINT
+
+Before deleting or modifying any existing logic or style, you must justify:
+
+1\. \*\*Why is this here?\*\* (e.g., Is this background providing visual depth?)
+
+2\. \*\*What breaks if I remove it?\*\* (e.g., Does the layout collapse or lose feedback?)
+
+3\. \*\*Is this an edge case?\*\* (e.g., Does this 'if' prevent a rare null pointer?)
+
+\*If you cannot answer with 100% certainty, PRESERVE THE CODE.\*
+
+\## 3. PRE-FLIGHT "THINK" PROTOCOL
+
+Before writing code, output an "Impact Assessment":
+
+1\. \*\*Preservation List:\*\* Explicitly list the styles/logic you are NOT touching.
+
+2\. \*\*Proposed Changes:\*\* List what you are replacing/improving.
+
+3\. \*\*Risk Analysis:\*\* Identify "confusing" code you kept for safety.

@@ -20,10 +20,12 @@ export function EnquiryHoneypot({ id }: { id: string }) {
       <label htmlFor={id}>Leave this field empty</label>
       <input
         id={id}
-        name="website"
+        name="enquiry-verification"
         type="text"
         tabIndex={-1}
         autoComplete="off"
+        data-1p-ignore
+        data-lpignore="true"
       />
     </div>
   );

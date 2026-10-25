@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { Button } from "@heroui/react/button";
 import { Form } from "@heroui/react/form";
 import { TextField } from "@heroui/react/textfield";
@@ -16,7 +16,17 @@ import { EnquiryHoneypot, FormNotice } from "./form-notice";
 import type { BookingDraft, FormErrors } from "@/types/forms";
 import { styles } from "@/components/forms/form-styles";
 
+function readBookingDraft(form: HTMLFormElement): BookingDraft {
+  const values = new FormData(form);
+  return {
+    name: String(values.get("name") ?? ""),
+    email: String(values.get("email") ?? ""),
+    message: String(values.get("message") ?? ""),
+  };
+}
+
 export function BookingForm() {
+  const formRef = useRef<HTMLFormElement>(null);
   const { sessionType, revision, onSessionChange } = useCoachingSelection();
   const [draft, setDraft] = useState<BookingDraft>({
     name: "",
@@ -29,7 +39,8 @@ export function BookingForm() {
   );
   const visibleErrors = { ...errors, ...submission.fieldErrors };
   function handleChange(field: keyof BookingDraft, value: string) {
-    const next = { ...draft, [field]: value };
+    const current = formRef.current ? readBookingDraft(formRef.current) : draft;
+    const next = { ...current, [field]: value };
     setDraft(next);
     submission.reset();
     if (visibleErrors[field])
@@ -39,29 +50,40 @@ export function BookingForm() {
       }));
   }
   function handleBlur(field: keyof BookingDraft) {
+    const next = formRef.current ? readBookingDraft(formRef.current) : draft;
+    setDraft(next);
+    if (JSON.stringify(next) !== JSON.stringify(draft)) submission.reset();
     setErrors((current) => ({
       ...current,
-      [field]: validateBookingDraft(draft)[field],
+      [field]: validateBookingDraft(next)[field],
     }));
   }
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const nextErrors = validateBookingDraft(draft);
+    const form = event.currentTarget;
+    const submittedDraft = readBookingDraft(form);
+    setDraft(submittedDraft);
+    const nextErrors = validateBookingDraft(submittedDraft);
     setErrors(nextErrors);
     submission.reset();
     const first = Object.keys(nextErrors)[0];
-    const form = event.currentTarget;
     if (first) {
       const input = form.elements.namedItem(first);
       if (input instanceof HTMLElement) input.focus();
       return;
     }
-    await submission.submit({ kind: "coaching", ...draft, sessionType }, form);
+    await submission.submit(
+      { kind: "coaching", ...submittedDraft, sessionType },
+      form,
+      JSON.stringify({ ...submittedDraft, revision }),
+    );
   }
   return (
     <div className={styles.booking}>
       <h3 className={styles.heading}>Enquire about a session</h3>
       <Form
+        ref={formRef}
+        autoComplete="on"
         validationBehavior="aria"
         onSubmit={handleSubmit}
         className={styles.form}
@@ -70,7 +92,7 @@ export function BookingForm() {
         aria-busy={submission.isSubmitting}
       >
         {/* <FormNotice /> */}
-        <EnquiryHoneypot id="booking-website" />
+        <EnquiryHoneypot id="booking-enquiry-verification" />
         <TextField
           name="name"
           value={draft.name}
