@@ -6,7 +6,6 @@ import { Modal } from "@heroui/react/modal";
 import {
   createContext,
   use,
-  useId,
   useCallback,
   useEffect,
   useState,
@@ -40,13 +39,7 @@ function ArrowIcon({ previous = false }: { previous?: boolean }) {
   );
 }
 
-function LightboxPhoto({
-  photo,
-  captionId,
-}: {
-  photo: GalleryPhoto;
-  captionId: string;
-}) {
+function LightboxPhoto({ photo }: { photo: GalleryPhoto }) {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -73,9 +66,6 @@ function LightboxPhoto({
           onError={() => setFailed(true)}
         />
       </div>
-      <figcaption id={captionId} className={styles.caption}>
-        {photo.alt}
-      </figcaption>
     </figure>
   );
 }
@@ -89,7 +79,6 @@ export function GalleryLightbox({
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const captionId = useId();
   const photo = photos[activeIndex];
 
   const move = useCallback(
@@ -133,7 +122,6 @@ export function GalleryLightbox({
           <Modal.Container placement="center" className={styles.container}>
             <Modal.Dialog
               aria-label="Gallery image viewer"
-              aria-describedby={captionId}
               className={styles.dialog}
             >
               <div className={styles.toolbar}>
@@ -144,11 +132,7 @@ export function GalleryLightbox({
                   className={styles.control}
                 />
               </div>
-              <LightboxPhoto
-                key={photo.id}
-                photo={photo}
-                captionId={captionId}
-              />
+              <LightboxPhoto key={photo.id} photo={photo} />
               <div className={styles.controls}>
                 <Button
                   variant="ghost"

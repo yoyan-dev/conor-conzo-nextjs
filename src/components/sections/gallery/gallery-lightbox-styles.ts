@@ -24,7 +24,7 @@ export const styles = {
     "[&:hover]:[background:rgb(255_255_255_/_0.16)]",
   ].join(" "),
   figure:
-    "gallery-lightbox-figure grid [grid-template-rows:minmax(0,_1fr)_auto] gap-3 min-h-0 m-0",
+    "gallery-lightbox-figure grid [grid-template-rows:minmax(0,_1fr)] gap-3 min-h-0 m-0",
   imageStage: "gallery-lightbox-imageStage relative min-h-0 w-full",
   lightboxImage: [
     'gallery-lightbox-lightboxImage object-contain [opacity:0] [&[data-loaded="true"]]:[opacity:1]',
@@ -32,10 +32,6 @@ export const styles = {
   ].join(" "),
   loading:
     "gallery-lightbox-loading absolute inset-0 grid [place-items:center] m-0 [color:var(--text-muted)] text-center",
-  caption: [
-    "gallery-lightbox-caption max-w-[70ch] mx-auto [color:var(--text-muted)] [font-size:0.875rem] leading-[1.5]",
-    "text-center",
-  ].join(" "),
   controls:
     "gallery-lightbox-controls flex items-center justify-between gap-4 w-[min(100%,_24rem)] mx-auto",
   counter: "gallery-lightbox-counter m-0 [font-size:0.875rem] tabular-nums",
