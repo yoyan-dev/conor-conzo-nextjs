@@ -47,7 +47,7 @@ export function FormFeedback({
         </strong>
         <p>
           {kind === "coaching"
-            ? "Your session is not booked yet. Coach Conzo can follow up with you by email."
+            ? "Coach Conzo can follow up with you by email."
             : "Coach Conzo can follow up with you by email."}
         </p>
       </div>
