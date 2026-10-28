@@ -1,7 +1,7 @@
 import { coach } from "@/content/coach";
 import { styles } from "@/components/forms/form-styles";
 
-export function FormNotice() {
+export function FormNotice({ id }: { id: string }) {
   return (
     <>
       <noscript>

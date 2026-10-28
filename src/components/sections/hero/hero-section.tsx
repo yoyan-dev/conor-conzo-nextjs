@@ -19,6 +19,7 @@ export function HeroSection() {
               src={portrait}
               alt="Coach Conzo smiling with both thumbs up"
               preload
+              fetchPriority="high"
               sizes="(min-width: 1440px) 721px, (min-width: 64rem) 51vw, (min-width: 29rem) 352px, 76vw"
               className={styles.image}
             />

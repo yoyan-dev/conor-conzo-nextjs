@@ -25,7 +25,7 @@ export function FaqSection() {
             Ask me anything
           </ActionLink>
         </div>
-        <FaqAccordion items={faqs} />
+        <FaqAccordion items={faqs} classNames={styles} />
       </div>
     </section>
   );

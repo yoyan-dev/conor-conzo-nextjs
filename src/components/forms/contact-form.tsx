@@ -50,6 +50,8 @@ export function ContactForm() {
   }
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // Repeated submit events must not invalidate the request already in flight.
+    if (submission.isSubmitting) return;
     const form = event.currentTarget;
     const submittedDraft = readContactDraft(form);
     setDraft(submittedDraft);
@@ -85,7 +87,7 @@ export function ContactForm() {
       aria-describedby="contact-form-notice"
       aria-busy={submission.isSubmitting}
     >
-      {/* <FormNotice id="contact-form-notice" /> */}
+      <FormNotice id="contact-form-notice" />
       <EnquiryHoneypot id="contact-enquiry-verification" />
       <TextField
         name="email"

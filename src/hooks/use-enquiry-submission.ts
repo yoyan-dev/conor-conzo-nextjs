@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useSyncExternalStore } from "react";
+import { useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import type {
   Enquiry,
@@ -29,6 +29,10 @@ export function useEnquirySubmission(draftKey: string) {
   const [result, setResult] = useState<Result>({ key: "", status: "idle" });
   const pending = useRef(false);
   const generation = useRef(0);
+  const currentDraftKey = useRef(draftKey);
+  useLayoutEffect(() => {
+    currentDraftKey.current = draftKey;
+  }, [draftKey]);
   const isSubmitting = result.status === "submitting";
   const current =
     result.key === draftKey ? result : { status: "idle" as const };
@@ -59,10 +63,18 @@ export function useEnquirySubmission(draftKey: string) {
         }),
       });
       const body: EnquiryResponse = await response.json();
+      // External coaching controls can change the draft without calling reset().
+      if (
+        requestGeneration !== generation.current ||
+        key !== currentDraftKey.current
+      )
+        return;
       if (response.ok && body.ok === true) {
         // Keep success feedback attached to the cleared draft, without clearing a newer draft.
         const successKey =
-          requestGeneration === generation.current ? (onSuccess?.() ?? key) : key;
+          requestGeneration === generation.current
+            ? (onSuccess?.() ?? key)
+            : key;
         setResult({ key: successKey, status: "success" });
       } else {
         const message =
@@ -76,6 +88,11 @@ export function useEnquirySubmission(draftKey: string) {
         if (input instanceof HTMLElement) input.focus();
       }
     } catch {
+      if (
+        requestGeneration !== generation.current ||
+        key !== currentDraftKey.current
+      )
+        return;
       setResult({
         key,
         status: "error",
@@ -84,7 +101,10 @@ export function useEnquirySubmission(draftKey: string) {
       });
     } finally {
       pending.current = false;
-      if (requestGeneration !== generation.current)
+      if (
+        requestGeneration !== generation.current ||
+        key !== currentDraftKey.current
+      )
         setResult({ key: "", status: "idle" });
     }
   }

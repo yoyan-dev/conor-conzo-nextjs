@@ -6,9 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "typecheck": "next typegen && tsc --noEmit",
     "check": "npm run lint && npm run typecheck && npm run build",
+    "audit:performance": "node scripts/audit-performance.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -16,7 +17,7 @@
     "@heroui/react": "3.2.6",
     "@heroui/styles": "3.2.6",
     "next": "16.4.3",
-    "nodemailer": "^10.1.2",
+    "nodemailer": "^10.2.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "server-only": "^0.0.1"

@@ -1,8 +1,21 @@
 "use client";
 import { Accordion } from "@heroui/react/accordion";
 import type { FaqItem } from "@/types/coaching";
-import { styles } from "@/components/sections/faq/faq-styles";
-export function FaqAccordion({ items }: { items: readonly FaqItem[] }) {
+type FaqAccordionClassNames = {
+  accordion: string;
+  item: string;
+  trigger: string;
+  indicator: string;
+  answer: string;
+};
+
+export function FaqAccordion({
+  items,
+  classNames: styles,
+}: {
+  items: readonly FaqItem[];
+  classNames: FaqAccordionClassNames;
+}) {
   return (
     <Accordion allowsMultipleExpanded className={styles.accordion}>
       {items.map((item, index) => (

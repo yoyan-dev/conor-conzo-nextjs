@@ -2,19 +2,11 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import { parseEnquiry } from "@/lib/enquiry-validation";
 import { sendEnquiry } from "@/lib/server/mailer";
+import { createEnquiryRateLimiter } from "@/lib/server/enquiry-rate-limit";
 import type { Enquiry, EnquiryResponse } from "@/types/forms";
 
 const MAX_BODY_BYTES = 16 * 1024;
-const WINDOW_MS = 60_000;
-const attempts: number[] = [];
-
-function takeSlot() {
-  const now = Date.now();
-  while (attempts.length && attempts[0] <= now - WINDOW_MS) attempts.shift();
-  if (attempts.length >= 10) return false;
-  attempts.push(now);
-  return true;
-}
+const takeSlot = createEnquiryRateLimiter();
 
 function expectedOrigin(request: Request) {
   const configured = process.env.SITE_URL?.trim();
@@ -72,7 +64,7 @@ function reply(body: EnquiryResponse, status: number, retryAfter?: string) {
 type Dependencies = {
   getOrigin: (request: Request) => string;
   send: (enquiry: Enquiry) => Promise<void>;
-  takeSlot: () => boolean;
+  takeSlot: (request: Request) => boolean;
 };
 
 export function createEnquiryHandler(overrides: Partial<Dependencies> = {}) {
@@ -110,7 +102,7 @@ export function createEnquiryHandler(overrides: Partial<Dependencies> = {}) {
     ) {
       return reply({ ok: false, message: "Send your enquiry as JSON." }, 415);
     }
-    if (!dependencies.takeSlot()) {
+    if (!dependencies.takeSlot(request)) {
       return reply(
         {
           ok: false,

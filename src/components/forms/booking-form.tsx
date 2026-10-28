@@ -60,6 +60,8 @@ export function BookingForm() {
   }
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // Repeated submit events must not invalidate the request already in flight.
+    if (submission.isSubmitting) return;
     const form = event.currentTarget;
     const submittedDraft = readBookingDraft(form);
     setDraft(submittedDraft);
@@ -97,7 +99,7 @@ export function BookingForm() {
         aria-describedby="booking-form-notice"
         aria-busy={submission.isSubmitting}
       >
-        {/* <FormNotice /> */}
+        <FormNotice id="booking-form-notice" />
         <EnquiryHoneypot id="booking-enquiry-verification" />
         <TextField
           name="name"
