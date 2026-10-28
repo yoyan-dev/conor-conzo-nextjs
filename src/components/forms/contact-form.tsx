@@ -66,6 +66,12 @@ export function ContactForm() {
       { kind: "contact", ...submittedDraft },
       form,
       JSON.stringify(submittedDraft),
+      () => {
+        const emptyDraft: ContactDraft = { email: "", message: "" };
+        setDraft(emptyDraft);
+        setErrors({});
+        return JSON.stringify(emptyDraft);
+      },
     );
   }
   return (

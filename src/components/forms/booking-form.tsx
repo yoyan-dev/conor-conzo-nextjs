@@ -76,6 +76,12 @@ export function BookingForm() {
       { kind: "coaching", ...submittedDraft, sessionType },
       form,
       JSON.stringify({ ...submittedDraft, revision }),
+      () => {
+        const emptyDraft: BookingDraft = { name: "", email: "", message: "" };
+        setDraft(emptyDraft);
+        setErrors({});
+        return JSON.stringify({ ...emptyDraft, revision });
+      },
     );
   }
   return (

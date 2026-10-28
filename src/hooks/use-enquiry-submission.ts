@@ -42,6 +42,7 @@ export function useEnquirySubmission(draftKey: string) {
     enquiry: Enquiry,
     form: HTMLFormElement,
     key = draftKey,
+    onSuccess?: () => string,
   ) {
     if (pending.current) return;
     pending.current = true;
@@ -59,7 +60,10 @@ export function useEnquirySubmission(draftKey: string) {
       });
       const body: EnquiryResponse = await response.json();
       if (response.ok && body.ok === true) {
-        setResult({ key, status: "success" });
+        // Keep success feedback attached to the cleared draft, without clearing a newer draft.
+        const successKey =
+          requestGeneration === generation.current ? (onSuccess?.() ?? key) : key;
+        setResult({ key: successKey, status: "success" });
       } else {
         const message =
           !body.ok && typeof body.message === "string"
