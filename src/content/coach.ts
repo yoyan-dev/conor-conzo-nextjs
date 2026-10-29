@@ -16,14 +16,14 @@ export const coach = {
     },
     {
       name: "TikTok",
-      handle: "@conzo03",
-      href: "https://www.tiktok.com/@conzo03",
+      handle: "@coachconzo",
+      href: "https://www.tiktok.com/@coachconzo",
     },
-    {
-      name: "YouTube",
-      handle: "@conzo03",
-      href: "https://www.youtube.com/@conzo03",
-    },
+    // {
+    //   name: "YouTube",
+    //   handle: "@conzo03",
+    //   href: "https://www.youtube.com/@conzo03",
+    // },
   ],
 } as const;
 
@@ -119,12 +119,14 @@ export const testimonials: Testimonial[] = [
   {
     name: "Vincent",
     rating: 5,
+    type: "Online",
     quote:
       "Professional friendly and down to earth connor was great at helping me start my fitness journey. He was reassuring and answered questions i had about equiptment use and provided me with a custom workout that helped me ease into working out helping me build confidence and and routines gradually 5/5 stars",
   },
   {
     name: "Dana",
     rating: 5,
+    type: "Online",
     quote:
       "Coach Conzo is that friend that would promise you soft serve and pizza, ONLY if you finish your workouts and do what’s best for you! In all seriousness, I’ve never been more motivated to workout and to learn more about what works out for my body, and I have seen results in the past month with him that I haven’t seen in my last five years at the gym. He’s always ready to answer any question and doesn’t hesitate to demonstrate any form to ensure you get maximum benefit of the training. He’s a pretty good fella too. 10/10 would recommend to y’all",
   },
@@ -138,12 +140,14 @@ export const testimonials: Testimonial[] = [
   {
     name: "Alex",
     rating: 5,
+    type: "Online",
     quote:
       "5 stars, extremely knowledgeable, totally able to work with my hypermobility, supportive like the ultimate hype man and set me up for long term gains",
   },
   {
     // Supplied WhatsApp screenshot: no star rating or calendar date is shown.
-    name: "Giorgio Basile",
+    name: "Giorgio",
+    type: "In-person · twice a week",
     quote:
       "Re-found my love of weightlifting through my sessions with Connor! For the longest time, I was stagnating in the gym and feeling a real loss of confidence from past injuries. Through Connor's training, I was able to build back my former strength and achieve PBs in my squat i thought were unattainable. I really appreciate his dedication, expertise, and ability to make me feel confident to reach higher. I look forward to my gym sessions every week.\nThanks for the confidence and new set of wheels, Connor!",
   },

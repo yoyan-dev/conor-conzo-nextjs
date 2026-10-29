@@ -33,8 +33,8 @@ export function BookingIntroduction() {
         <span>Real talk from Conzo</span>
         <p>
           &quot;I&apos;ve been doing this for nearly 16 years. I&apos;ve seen
-          every level of fitness, every lifestyle, every excuse — and I mean
-          that with full love. The call is just a chat. Come as you are.&quot;
+          every level of fitness, every lifestyle, every excuse and I mean that
+          with full love. The call is just a chat. Come as you are.&quot;
         </p>
       </div>
     </div>
