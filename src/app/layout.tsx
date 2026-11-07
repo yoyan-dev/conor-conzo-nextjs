@@ -2,6 +2,7 @@ import { sharedStyles } from "@/components/ui/shared-styles";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { site } from "@/lib/site";
+import { Analytics } from "@vercel/analytics/next";
 import "./assets/css/globals.css";
 
 const raleway = localFont({
@@ -43,6 +44,7 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        <Analytics />
       </body>
     </html>
   );
